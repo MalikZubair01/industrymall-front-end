@@ -266,7 +266,7 @@ const RegisterPage: NextPage = () => {
                   <div className="form-row row">
                     <Col md="12">
                       <p>
-                        Have you already an account?{" "}
+                        Already Have an account?{" "}
                         <a href="/pages/account/login" className="txt-default">
                           Click here to Login
                         </a>
