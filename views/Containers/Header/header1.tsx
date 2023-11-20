@@ -1,6 +1,9 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Media } from "reactstrap";
+import { Container, Row, Col, Media, Input } from "reactstrap";
 import TopBar from "./widgets/TopBar";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import Search from "./widgets/search";
 import ShoppingCart from "./widgets/shopping-cart";
 import UserOptions from "./widgets/user-signedInOption";
@@ -109,80 +112,121 @@ const Header: NextPage<header> = ({
 
   return (
     <Fragment>
-      <header id="stickyHeader">
-        <div className="mobile-fix-option"></div>
-        <TopBar />
-        <div className="layout-header2">
-          <Container>
-            <Row>
-              <Col md="12">
-                <div className="main-menu-block">
-                  <div
-                    onClick={() => {
-                      setLeftMenu(!leftMenu);
-                      document.body.style.overflow = "hidden";
-                    }}
-                    className="sm-nav-block"
-                  >
-                    <span className="sm-nav-btn">
-                      <i className="fa fa-bars"></i>
-                    </span>
-                  </div>
-                  <div className="logo-block">
-                    <Link href="/#">
-                      <a>
-                        <Media
-                          src={`/images/layout-2/logo/im-logo.png`}
-                          className="img-fluid logo"
-                          width="150px"
-                          alt="logo"
-                        />
-                      </a>
-                    </Link>
-                  </div>
-                  <Search products={products} />
-                  <ShoppingCart
-                    position={cartPopupPosition}
-                    cartDisplay={display}
-                    layout="layout2"
-                  />
-                  {/* israr */}
-                  <div className="category-header-2" id="user-wish">
-                    <div>
-                      <Row>
-                        <Col>
-                          <div className="navbar-menu">
-                            <div className="category-left">
-                              <div className="icon-block mt-3 ">
-                                <ul>
-                                  <span className="ms-2 d-flex">
-                                    <span className="d-block d-sm-none">
-                                      <UserProfile />
+      <div className="custom-container">
+        <header id="stickyHeader">
+          <div className="mobile-fix-option"></div>
+          <TopBar />
+          <div className="layout-header2">
+            <div className="custom-container">
+              <Row>
+                <div className="col-12 col-md-12 col-lg-12 ">
+                  <div className="main-menu-block  w-100 justify-align-content-around">
+                    <div
+                      onClick={() => {
+                        setLeftMenu(!leftMenu);
+                        document.body.style.overflow = "hidden";
+                      }}
+                      className="sm-nav-block"
+                    >
+                      <span className="sm-nav-btn">
+                        <i className="fa fa-bars"></i>
+                      </span>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <div className="logo-block">
+                        <Link href="/#">
+                          <a>
+                            <Media
+                              src={`/images/layout-2/logo/im-logo.png`}
+                              className="img-fluid logo"
+                              width="150px"
+                              alt="logo"
+                            />
+                          </a>
+                        </Link>
+                      </div>
+
+                      <Search products={products} />
+
+                      <ShoppingCart
+                        position={cartPopupPosition}
+                        cartDisplay={display}
+                        layout="layout2"
+                      />
+                      <div className="category-header-2 " id="user-wish">
+                        {/* ...... */}
+                        <Row className="">
+                          <Col>
+                            <div className="navbar-menu">
+                              <div className="category-left">
+                                <div className="icon-block ">
+                                  <ul>
+                                    <span className=" d-flex">
+                                      <span className="d-block d-sm-none">
+                                        <UserProfile />
+                                      </span>
+                                      <span className="d-none d-sm-block">
+                                        <UserOptions />
+                                      </span>
+                                      <WishList />
+                                      <MobileSearch />
+                                      <MobileSetting />
                                     </span>
-                                    <span className="d-none d-sm-block">
-                                      <UserOptions />
-                                    </span>
-                                    <WishList />
-                                    <MobileSearch />
-                                    <MobileSetting />
-                                  </span>
-                                </ul>
+                                  </ul>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </Col>
-                      </Row>
+                          </Col>
+                          <Col className=" w-100">
+                            <div
+                              className="input-group mb-3 rounded rounded-pill p-1 d-flex justify-content-end w-100"
+                              style={{
+                                backgroundColor: "#0272BC",
+                                marginRight: "300px",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                className="form-control rounded-pill"
+                                placeholder="Enter Tracking Number"
+                                aria-label="Enter Tracking Number"
+                                aria-describedby="basic-addon2"
+                                style={{
+                                  backgroundColor: "white",
+
+                                  borderColor: "#0272BC",
+                                  borderRadius: "20px",
+                                }}
+                              />
+                              <button
+                                className="input-group-text"
+                                id="basic-addon2"
+                                style={{
+                                  backgroundColor: "#0272BC",
+                                  color: "white",
+                                  borderColor: "#0272BC",
+                                  borderRadius: "20px",
+                                }}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faSearch}
+                                  style={{ fontSize: "20px" }}
+                                />
+                              </button>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+              </Row>
+            </div>
+          </div>
 
-        {/* Nav bar */}
-        {/* commented by israr */}
-        {/* <div className="category-header-2">
+          {/* Nav bar */}
+          {/* commented by israr */}
+          {/* <div className="category-header-2">
           <div className="custom-container">
             <Row>
               <Col>
@@ -209,8 +253,9 @@ const Header: NextPage<header> = ({
           </div>
         </div> */}
 
-        {/* Nav bar end */}
-      </header>
+          {/* Nav bar end */}
+        </header>
+      </div>
     </Fragment>
   );
 };
