@@ -49,10 +49,8 @@ const Home: NextPage = () => {
   });
   const apiData = useApiData() as ApiData;
 
- 
-
   const ip = process.env.NEXT_PUBLIC_BACKEND_URL;
-  console.log("backend url",ip)
+  console.log("backend url", ip);
 
   useEffect(() => {
     try {
@@ -69,50 +67,67 @@ const Home: NextPage = () => {
   }, [apiData]);
   return (
     <>
-    <Layouts>
-            {/* {error && <div className="alert alert-danger" role="alert">{error}</div>} */}
-            {apiData ? (
-              <div className="bg-light">
-                <Menu meneData={apiData} />
-                <div className="my-4">
-                  <TopCategory />
-                </div>
-                <CollectionBanner
-                  banner1={categoriesData.f_s_banner_1}
-                  banner2={categoriesData.f_s_banner_2}
-                  banner3={categoriesData.f_s_banner_3}
-                />
-                <TabProduct catId={parseInt(categoriesData.category1)} effect="icon-inline" />
-                <TabProduct catId={parseInt(categoriesData.category2)} effect="icon-inline" />
-                <CollectionBannerTwo banner={categoriesData.center_image1} />
-                <TabProduct catId={parseInt(categoriesData.category3)} effect="icon-inline" />
-                <ShortDisplay data={apiData} />
-                <section className="rounded-category">
-                  <Brands brands={apiData.brands}/>
-                </section>
-                <TabProduct catId={parseInt(categoriesData.category4)} effect="icon-inline" />
-                <RatioSquare />
-                <CollectionBannerThree
-                  ban1={categoriesData.e_s_banner_1}
-                  ban2={categoriesData.e_s_banner_2}
-                  ban3={categoriesData.e_s_banner_3}
-                />
-                <section className="rounded-category">
-                  <Suplier brands={apiData.brands}/>
-                </section>
-                <AllProducts />
-                <ContactBanner />
-              </div>
-            ) : (
-              <div className="d-flex justify-content-center align-items-center m-5 p-5">
-                 <div className="text-center">
-                  <h1>Slow Internet! 😟</h1>
-                  <p>Please check your internet connection 🚧 and try reloading.</p>
-                  <button className="btn btn-rounded m-3" onClick={() => window.location.reload()}>Reload</button>
-                </div>
-              </div>
-            )}
-          </Layouts>
+      <Layouts>
+        {/* {error && <div className="alert alert-danger" role="alert">{error}</div>} */}
+        {apiData ? (
+          <div className="bg-light">
+            <Menu meneData={apiData} />
+            <div className="my-4">
+              <TopCategory />
+            </div>
+            <CollectionBanner
+              banner1={categoriesData.f_s_banner_1}
+              banner2={categoriesData.f_s_banner_2}
+              banner3={categoriesData.f_s_banner_3}
+            />
+            <TabProduct
+              catId={parseInt(categoriesData.category1)}
+              effect="icon-inline"
+            />
+            <TabProduct
+              catId={parseInt(categoriesData.category2)}
+              effect="icon-inline"
+            />
+            <CollectionBannerTwo banner={categoriesData.center_image1} />
+            <TabProduct
+              catId={parseInt(categoriesData.category3)}
+              effect="icon-inline"
+            />
+            <ShortDisplay data={apiData} />
+            <section className="rounded-category custom-container">
+              <Brands brands={apiData.brands} />
+            </section>
+            <TabProduct
+              catId={parseInt(categoriesData.category4)}
+              effect="icon-inline"
+            />
+            <RatioSquare />
+            <CollectionBannerThree
+              ban1={categoriesData.e_s_banner_1}
+              ban2={categoriesData.e_s_banner_2}
+              ban3={categoriesData.e_s_banner_3}
+            />
+            <section className="rounded-category  custom-container">
+              <Suplier brands={apiData.brands} />
+            </section>
+            <AllProducts />
+            <ContactBanner />
+          </div>
+        ) : (
+          <div className="d-flex justify-content-center align-items-center m-5 p-5">
+            <div className="text-center">
+              <h1>Slow Internet! 😟</h1>
+              <p>Please check your internet connection 🚧 and try reloading.</p>
+              <button
+                className="btn btn-rounded m-3"
+                onClick={() => window.location.reload()}
+              >
+                Reload
+              </button>
+            </div>
+          </div>
+        )}
+      </Layouts>
     </>
   );
 };

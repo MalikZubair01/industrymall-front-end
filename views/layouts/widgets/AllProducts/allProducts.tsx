@@ -69,7 +69,7 @@ const AllProducts = () => {
   };
 
   return (
-    <section className="section-big-py-space ratio_asos bg-light">
+    <section className="section-big-py-space ratio_asos bg-light custom-container">
       <div className="allproduct-text text-center mx-auto mb-5 ">
         <p style={{ color: "white", fontSize: "30px", fontWeight: "100" }}>
           Featured Products
@@ -98,7 +98,11 @@ const AllProducts = () => {
                   {/* Use different column sizes based on screen size */}
                   <div
                     className="product"
-                    style={{ height: "250px",width:"257px", marginBottom:"160px"}}
+                    style={{
+                      height: "250px",
+                      width: "257px",
+                      marginBottom: "160px",
+                    }}
                   >
                     <ProductBox
                       hoverEffect={true}

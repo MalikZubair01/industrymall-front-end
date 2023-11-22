@@ -50,7 +50,7 @@ const Menu = ({ meneData }: MenuProps) => {
   return (
     <div className="custom-container">
       <div className="d-flex gap-3">
-        <div className="">
+        <div className=" ">
           <div className="custom-menus mb-3" onMouseLeave={handleMouseLeave}>
             <div className="custom-input-group-text">
               <h4>Our Menu & Categories</h4>
@@ -70,7 +70,13 @@ const Menu = ({ meneData }: MenuProps) => {
                       className="custom-text-black"
                       onMouseEnter={() => handleMouseEnter(index)}
                     >
-                      <div style={{ whiteSpace: "pre-line" }}>
+                      <div
+                        style={{
+                          whiteSpace: "pre-line",
+                          fontSize: "1.19em",
+                          lineHeight: "1em",
+                        }}
+                      >
                         {menuData[menuKey].menu_name}
                       </div>
                     </div>

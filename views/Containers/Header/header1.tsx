@@ -16,7 +16,8 @@ import { useApiData } from "helpers/data/DataContext";
 import Image from "next/image";
 import Link from "next/link";
 import UserProfile from "./widgets/user-profile";
-interface header {
+
+interface HeaderProps {
   cartPopupPosition: string;
   display: string;
   category: any;
@@ -38,7 +39,7 @@ interface ApiData {
   };
 }
 
-const Header: NextPage<header> = ({
+const Header: NextPage<HeaderProps> = ({
   cartPopupPosition,
   display,
   category,
@@ -111,152 +112,121 @@ const Header: NextPage<header> = ({
   }, [apiData]);
 
   return (
-    <Fragment>
-      <div className="custom-container">
-        <header id="stickyHeader">
-          <div className="mobile-fix-option"></div>
-          <TopBar />
-          <div className="layout-header2">
-            <div className="custom-container">
-              <Row>
-                <div className="col-12 col-md-12 col-lg-12 ">
-                  <div className="main-menu-block  w-100 justify-align-content-around">
-                    <div
-                      onClick={() => {
-                        setLeftMenu(!leftMenu);
-                        document.body.style.overflow = "hidden";
-                      }}
-                      className="sm-nav-block"
-                    >
-                      <span className="sm-nav-btn">
-                        <i className="fa fa-bars"></i>
-                      </span>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <div className="logo-block">
-                        <Link href="/#">
-                          <a>
-                            <Media
-                              src={`/images/layout-2/logo/im-logo.png`}
-                              className="img-fluid logo"
-                              width="150px"
-                              alt="logo"
-                            />
-                          </a>
-                        </Link>
-                      </div>
-
-                      <Search products={products} />
-
+    <div className="custom-container">
+      <header id="stickyHeader">
+        <div className="mobile-fix-option"></div>
+        <TopBar />
+        <div className="layout-header2">
+          <div className="custom-container">
+            <Row className="align-items-center d-flex justify-content-between">
+              <Col xs={6} sm={4} md={3} lg={2}>
+                <div className="main-menu-block w-100 justify-content-between">
+                  <div
+                    onClick={() => {
+                      setLeftMenu(!leftMenu);
+                      document.body.style.overflow = "hidden";
+                    }}
+                    className="sm-nav-block"
+                  >
+                    <span className="sm-nav-btn">
+                      <i className="fa fa-bars"></i>
+                    </span>
+                  </div>
+                  <div className="logo-block">
+                    <Link href="/#">
+                      <a>
+                        <Media
+                          src={`/images/layout-2/logo/im-logo.png`}
+                          className="img-fluid logo"
+                          width="150px"
+                          alt="logo"
+                        />
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              </Col>
+              <Col xs={6} sm={8} md={9} lg={4}>
+                <Search products={products} />
+              </Col>
+              <Col xs={6} sm={8} md={9} lg={3}>
+                <div className="category-header-2 mx-5 bg-white">
+                  <div className="navbar-menu">
+                    <div className="category-left main-menu-block">
                       <ShoppingCart
                         position={cartPopupPosition}
                         cartDisplay={display}
                         layout="layout2"
                       />
-                      <div className="category-header-2 " id="user-wish">
-                        {/* ...... */}
-                        <Row className="">
-                          <Col>
-                            <div className="navbar-menu">
-                              <div className="category-left">
-                                <div className="icon-block ">
-                                  <ul>
-                                    <span className=" d-flex">
-                                      <span className="d-block d-sm-none">
-                                        <UserProfile />
-                                      </span>
-                                      <span className="d-none d-sm-block">
-                                        <UserOptions />
-                                      </span>
-                                      <WishList />
-                                      <MobileSearch />
-                                      <MobileSetting />
-                                    </span>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </Col>
-                          <Col className=" w-100">
-                            <div
-                              className="input-group mb-3 rounded rounded-pill p-1 d-flex justify-content-end w-100"
-                              style={{
-                                backgroundColor: "#0272BC",
-                                marginRight: "300px",
-                              }}
-                            >
-                              <input
-                                type="text"
-                                className="form-control rounded-pill"
-                                placeholder="Enter Tracking Number"
-                                aria-label="Enter Tracking Number"
-                                aria-describedby="basic-addon2"
-                                style={{
-                                  backgroundColor: "white",
-
-                                  borderColor: "#0272BC",
-                                  borderRadius: "20px",
-                                }}
-                              />
-                              <button
-                                className="input-group-text"
-                                id="basic-addon2"
-                                style={{
-                                  backgroundColor: "#0272BC",
-                                  color: "white",
-                                  borderColor: "#0272BC",
-                                  borderRadius: "20px",
-                                }}
-                              >
-                                <FontAwesomeIcon
-                                  icon={faSearch}
-                                  style={{ fontSize: "20px" }}
-                                />
-                              </button>
-                            </div>
-                          </Col>
-                        </Row>
+                      <div className="icon-block ">
+                        <ul className="d-flex">
+                          <li className="d-block d-sm-none">
+                            <UserProfile />
+                          </li>
+                          <li className="d-none d-sm-block">
+                            <UserOptions />
+                          </li>
+                          <li>
+                            <WishList />
+                          </li>
+                          <li>
+                            <MobileSearch />
+                          </li>
+                          <li>
+                            <MobileSetting />
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
                 </div>
-              </Row>
-            </div>
-          </div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={3}>
+                <div className="col  ">
+                  <div
+                    className="input-group mb-3 rounded rounded-pill p-1 d-flex justify-content-end w-100"
+                    style={{
+                      backgroundColor: "#0272BC",
+                      marginRight: "150px",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      className="form-control rounded-pill"
+                      placeholder="Enter Tracking Number"
+                      aria-label="Enter Tracking Number"
+                      aria-describedby="basic-addon2"
+                      style={{
+                        backgroundColor: "white",
 
-          {/* Nav bar */}
-          {/* commented by israr */}
-          {/* <div className="category-header-2">
-          <div className="custom-container">
-            <Row>
-              <Col>
-                <div className="navbar-menu">
-                  <div className="category-left">
-                    <Category category={category} />
-                    <HorizaontalMenu />
-                    <div className="icon-block">
-                      <ul>
-                        <User />
-                        <WishList />
-                        <MobileSearch />
-                        <MobileSetting />
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="category-right">
-                    <ContactUs spanClass="" />
-                    <Gift />
+                        borderColor: "#0272BC",
+                        borderRadius: "20px",
+                      }}
+                    />
+                    <button
+                      className="input-group-text"
+                      id="basic-addon2"
+                      style={{
+                        backgroundColor: "#0272BC",
+                        color: "white",
+                        borderColor: "#0272BC",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faSearch}
+                        style={{ fontSize: "20px" }}
+                      />
+                    </button>
                   </div>
                 </div>
               </Col>
             </Row>
           </div>
-        </div> */}
-
-          {/* Nav bar end */}
-        </header>
-      </div>
-    </Fragment>
+        </div>
+      </header>
+    </div>
   );
 };
+
 export default Header;
