@@ -173,7 +173,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
   return (
     <>
       <section className="section-pt-space bg-white mt-2 ">
-        <div className=" ">
+        <div className="custom-container ">
           <div className="tab-product-main">
             <div className="tab-prodcut-contain">
               <div className="category-title">
@@ -183,7 +183,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
                 </h3>
               </div>
 
-              <div className="top-bar-product-catogories">
+              <div className="top-bar-product-catogories ">
                 <Carousel
                   activeIndex={activeIndex}
                   next={next}
@@ -194,7 +194,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
                     <CarouselItem key={subCategory.id}>
                       <ul className="product-catogories">
                         {subCategoriesData
-                          .slice(i, i + 6)
+                          .slice(i, i + 5)
                           .map((subCategory) => (
                             <li className="top-catogories" key={subCategory.id}>
                               <a

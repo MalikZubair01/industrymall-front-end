@@ -50,6 +50,7 @@
     "react-i18next": "^11.8.15",
     "react-masonry-css": "^1.0.16",
     "react-photoswipe-gallery": "^2.2.1",
+    "react-responsive": "^9.0.2",
     "react-slick": "^0.29.0",
     "react-sticky-el": "^2.0.9",
     "react-toastify": "^9.1.3",

@@ -119,7 +119,8 @@ const Header: NextPage<HeaderProps> = ({
         <div className="layout-header2">
           <div className="custom-container">
             <Row className="align-items-center d-flex justify-content-between">
-              <Col xs={6} sm={4} md={3} lg={2}>
+              {/* First Column */}
+              <Col xs={12} sm={4} md={3} lg={2}>
                 <div className="main-menu-block w-100 justify-content-between">
                   <div
                     onClick={() => {
@@ -146,11 +147,15 @@ const Header: NextPage<HeaderProps> = ({
                   </div>
                 </div>
               </Col>
-              <Col xs={6} sm={8} md={9} lg={4}>
+
+              {/* Second Column */}
+              <Col xs={12} sm={8} md={9} lg={4} className="d-none d-sm-block">
                 <Search products={products} />
               </Col>
-              <Col xs={6} sm={8} md={9} lg={3}>
-                <div className="category-header-2 mx-5 bg-white">
+
+              {/* Third Column */}
+              <Col xs={12} sm={4} md={9} lg={2}>
+                <div className="category-header-2 bg-white">
                   <div className="navbar-menu">
                     <div className="category-left main-menu-block">
                       <ShoppingCart
@@ -158,7 +163,7 @@ const Header: NextPage<HeaderProps> = ({
                         cartDisplay={display}
                         layout="layout2"
                       />
-                      <div className="icon-block ">
+                      <div className="icon-block">
                         <ul className="d-flex">
                           <li className="d-block d-sm-none">
                             <UserProfile />
@@ -181,30 +186,29 @@ const Header: NextPage<HeaderProps> = ({
                   </div>
                 </div>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={3}>
-                <div className="col  ">
-                  <div
-                    className="input-group mb-3 rounded rounded-pill p-1 d-flex justify-content-end w-100"
-                    style={{
-                      backgroundColor: "#0272BC",
-                      marginRight: "150px",
-                    }}
-                  >
-                    <input
-                      type="text"
-                      className="form-control rounded-pill"
-                      placeholder="Enter Tracking Number"
-                      aria-label="Enter Tracking Number"
-                      aria-describedby="basic-addon2"
-                      style={{
-                        backgroundColor: "white",
 
-                        borderColor: "#0272BC",
-                        borderRadius: "20px",
-                      }}
-                    />
+              {/* Fourth Column */}
+
+              <Col xs={12} sm={8} md={12} lg={3} className="">
+                <div
+                  className="input-group mb-3 rounded rounded-pill p-1"
+                  style={{ backgroundColor: "#0272BC" }}
+                >
+                  <input
+                    type="text"
+                    className="form-control rounded-pill mb-2"
+                    placeholder="Enter Tracking Number"
+                    aria-label="Enter Tracking Number"
+                    aria-describedby="basic-addon2"
+                    style={{
+                      backgroundColor: "white",
+                      borderColor: "#0272BC",
+                      borderRadius: "20px",
+                    }}
+                  />
+                  <div className="input-group-append">
                     <button
-                      className="input-group-text"
+                      className="input-group-text rounded-pill"
                       id="basic-addon2"
                       style={{
                         backgroundColor: "#0272BC",

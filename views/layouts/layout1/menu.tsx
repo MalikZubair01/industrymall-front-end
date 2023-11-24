@@ -4,6 +4,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Carousel from "react-bootstrap/Carousel";
 import { Media } from "reactstrap";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "react-responsive";
+import Accordion from "react-bootstrap/Accordion";
 
 type MenuProps = {
   meneData: any;
@@ -14,6 +16,8 @@ const Menu = ({ meneData }: MenuProps) => {
   const [menuData, setMenuData] = useState([]);
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const [banners, setBanners] = useState([]);
+
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const handleMouseEnter = (index) => {
     setOpenMenuIndex(index);
@@ -50,69 +54,134 @@ const Menu = ({ meneData }: MenuProps) => {
   return (
     <div className="custom-container">
       <div className="d-flex gap-3">
-        <div className=" ">
-          <div className="custom-menus mb-3" onMouseLeave={handleMouseLeave}>
-            <div className="custom-input-group-text">
-              <h4>Our Menu & Categories</h4>
-            </div>
-            {Object.keys(menuData).map((menuKey, index) => (
-              <DropdownButton
-                key={index}
-                drop="end"
-                className="custom-dropdown-menu"
-                show={openMenuIndex === index}
-                title={
-                  <div
-                    className="custom-text-black"
-                    onMouseEnter={() => handleMouseEnter(index)}
-                  >
+        <div className="custom-menus mb-3" onMouseLeave={handleMouseLeave}>
+          <div className="custom-input-group-text">
+            <h4>Our Menu & Categories</h4>
+          </div>
+          {isMobile ? (
+            <Accordion onMouseLeave={handleMouseLeave}>
+              {/* Accordion content for mobile screens */}
+              {Object.keys(menuData).map((menuKey, index) => (
+                <Accordion.Item key={index} eventKey={index.toString()}>
+                  <Accordion.Header>
                     <div
                       className="custom-text-black"
                       onMouseEnter={() => handleMouseEnter(index)}
                     >
                       <div
-                        style={{
-                          whiteSpace: "pre-line",
-                          fontSize: "1.19em",
-                          lineHeight: "1em",
-                        }}
+                        className="custom-text-black"
+                        onMouseEnter={() => handleMouseEnter(index)}
                       >
-                        {menuData[menuKey].menu_name}
+                        <div
+                          style={{
+                            whiteSpace: "pre-line",
+                            fontSize: "1.19em",
+                            lineHeight: "1em",
+                          }}
+                        >
+                          {menuData[menuKey].menu_name}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                }
-              >
-                <div className="side-menu-box">
-                  {menuData[menuKey].categories?.map(
-                    (category, categoryIndex) => (
-                      <div className="custom-side-menu-category">
-                        <Dropdown.Item
-                          key={categoryIndex}
-                          onClick={handleClick(category.id, "cat")}
-                          href={category.link}
-                        >
-                          <h5>{category.name}</h5>
-                        </Dropdown.Item>
-                        {category.sub_categories?.map(
-                          (subcategory, subcategoryIndex) => (
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div className="side-menu-box">
+                      {menuData[menuKey].categories?.map(
+                        (category, categoryIndex) => (
+                          <div className="custom-side-menu-category">
                             <Dropdown.Item
-                              key={subcategoryIndex}
-                              href={subcategory.link}
-                              onClick={handleClick(subcategory.id, "subcat")}
+                              key={categoryIndex}
+                              onClick={handleClick(category.id, "cat")}
+                              href={category.link}
                             >
-                              {subcategory.name}
+                              <h5>{category.name}</h5>
                             </Dropdown.Item>
-                          )
-                        )}
+                            {category.sub_categories?.map(
+                              (subcategory, subcategoryIndex) => (
+                                <Dropdown.Item
+                                  key={subcategoryIndex}
+                                  href={subcategory.link}
+                                  onClick={handleClick(
+                                    subcategory.id,
+                                    "subcat"
+                                  )}
+                                >
+                                  {subcategory.name}
+                                </Dropdown.Item>
+                              )
+                            )}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              ))}
+            </Accordion>
+          ) : (
+            /* Remaining desktop menu content... */
+            <div className="custom-menus mb-3" onMouseLeave={handleMouseLeave}>
+              {/* Desktop menu content */}
+              {Object.keys(menuData).map((menuKey, index) => (
+                <DropdownButton
+                  key={index}
+                  drop="end"
+                  className="custom-dropdown-menu"
+                  show={openMenuIndex === index}
+                  title={
+                    <div
+                      className="custom-text-black"
+                      onMouseEnter={() => handleMouseEnter(index)}
+                    >
+                      <div
+                        className="custom-text-black"
+                        onMouseEnter={() => handleMouseEnter(index)}
+                      >
+                        <div
+                          style={{
+                            whiteSpace: "pre-line",
+                            fontSize: "1.19em",
+                            lineHeight: "1em",
+                          }}
+                        >
+                          {menuData[menuKey].menu_name}
+                        </div>
                       </div>
-                    )
-                  )}
-                </div>
-              </DropdownButton>
-            ))}
-          </div>
+                    </div>
+                  }
+                >
+                  <div className="side-menu-box">
+                    {menuData[menuKey].categories?.map(
+                      (category, categoryIndex) => (
+                        <div className="custom-side-menu-category">
+                          <Dropdown.Item
+                            key={categoryIndex}
+                            onClick={handleClick(category.id, "cat")}
+                            href={category.link}
+                          >
+                            <h5>{category.name}</h5>
+                          </Dropdown.Item>
+                          {category.sub_categories?.map(
+                            (subcategory, subcategoryIndex) => (
+                              <Dropdown.Item
+                                key={subcategoryIndex}
+                                href={subcategory.link}
+                                onClick={handleClick(subcategory.id, "subcat")}
+                              >
+                                {subcategory.name}
+                              </Dropdown.Item>
+                            )
+                          )}
+                        </div>
+                      )
+                    )}
+                  </div>
+                </DropdownButton>
+              ))}
+            </div>
+          )}
         </div>
+
         <div className="slider-top w-50">
           <Carousel>
             {banners.map((banner, index) => (
