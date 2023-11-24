@@ -14,7 +14,6 @@ const currencyData = {
   ],
 };
 
-
 const TopBar: React.FC = () => {
   const { i18n, t } = useTranslation();
   const [openLang, setOpenLang] = useState(false);
@@ -52,7 +51,7 @@ const TopBar: React.FC = () => {
           <Col xl="5" md="7" sm="6">
             <div className="top-header-left">
               <div className="shpping-order">
-                <Link href={process.env.NEXT_PUBLIC_BACKEND_URL}>
+                <Link href={`${process.env.NEXT_PUBLIC_BACKEND_URL}`}>
                   <a target="__blank">
                     <h6>{t("Sell on Industry Mall")} </h6>
                   </a>
