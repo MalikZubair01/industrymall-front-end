@@ -75,7 +75,7 @@ const Menu = ({ meneData }: MenuProps) => {
                         <div
                           style={{
                             whiteSpace: "pre-line",
-                            fontSize: "1.19em",
+                            fontSize: "1em",
                             lineHeight: "1em",
                           }}
                         >
@@ -140,7 +140,7 @@ const Menu = ({ meneData }: MenuProps) => {
                         <div
                           style={{
                             whiteSpace: "pre-line",
-                            fontSize: "1.19em",
+                            fontSize: "1em",
                             lineHeight: "1em",
                           }}
                         >
