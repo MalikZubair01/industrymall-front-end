@@ -690,7 +690,7 @@ button {
   height: 100%;
 }
 
-/*=====================
+/*====================
   2.Services CSS start
 ==========================*/
 .services {
@@ -1732,8 +1732,8 @@ button {
 ////////////////  Menus    //////////////////////
 ///
 .custom-menus {
-  width: 315px;
-  height: 100%;
+  // width: 315px;
+  // height: 100%;
   background-color: rgb(240, 239, 239);
   .custom-text-black {
     padding-left: 15px;
@@ -1747,7 +1747,7 @@ button {
     padding: 20px;
   }
   .dropdown-toggle {
-    width: 100%;
+    // width: 100%;
     background-color: transparent;
     padding: 10px 0;
     border: none;
@@ -1843,7 +1843,7 @@ button {
     }
 
     .custom-menus {
-      width: 100%; // Take the full width of the container
+      // width: 100%; // Take the full width of the container
     }
 
     .slider-top {
@@ -1947,7 +1947,7 @@ button {
         background-color: #fff;
         background-size: 100% 100%;
       }
-      
+
       .product-back {
         position: absolute;
         top: 0;
@@ -2419,14 +2419,13 @@ button {
       }
     }
   }
-  
-  }
+}
 
-  .product-imgbox:hover img {
-    transform: scale(1.2);
-    transition: transform 0.3s ease; /* You can adjust the duration and timing function (e.g., ease-in-out) as needed */
-  }
-  
+.product-imgbox:hover img {
+  transform: scale(1.2);
+  transition: transform 0.3s ease; /* You can adjust the duration and timing function (e.g., ease-in-out) as needed */
+}
+
 .no-slider {
   .product-box {
     width: 100%;
@@ -2597,8 +2596,7 @@ button {
       }
     }
   }
-  .slick-slider{
-
+  .slick-slider {
   }
   .hot-deal-contain1 {
     background-color: $white;
@@ -2932,7 +2930,7 @@ button {
   .main-menu-block {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     .menu-left {
       display: flex;
@@ -3048,7 +3046,7 @@ button {
           .mobile-user {
             a {
               i {
-                padding-right: 25px;
+                // padding-right: 25px;
               }
             }
           }
@@ -3081,7 +3079,7 @@ button {
             height: 16px;
             border-radius: 50%;
             display: flex;
-            justify-content: center;
+            justify-content: start;
             align-items: center;
             font-size: 11px;
             position: absolute;
@@ -3330,7 +3328,8 @@ button {
   margin-bottom: 30px;
   .navbar-menu {
     display: flex;
-    justify-content: space-between;
+    //here changing
+    justify-content: flex-start;
     position: relative;
     z-index: 9;
     .category-left {
@@ -3350,8 +3349,8 @@ button {
             h5 {
               text-transform: uppercase;
               font-size: 14px;
-              letter-spacing: 1px;
-              margin-left: 16px;
+              // letter-spacing: 1px;
+              // margin-left: 16px;
               cursor: pointer;
             }
           }
@@ -3368,7 +3367,7 @@ button {
             align-items: center;
           }
           .nav-cat {
-            padding: 20px;
+            // padding: 20px;
             margin-top: 15px;
             background-color: $white;
             border: 5px solid #f2f8f9;
@@ -5384,9 +5383,8 @@ button {
         font-weight: 300;
         margin: 0;
       }
-
     }
-    
+
     ul.product-catogories {
       display: flex;
       li {
@@ -6169,8 +6167,8 @@ button {
     }
   }
 }
-.product-wrapper-grid.list-view {x
-  .product-wrap {
+.product-wrapper-grid.list-view {
+  x .product-wrap {
     .product-info {
       text-align: left;
       align-self: center;
@@ -6187,7 +6185,7 @@ button {
       .img-block {
         width: 20%;
       }
-      
+
       .product-detail {
         width: 80%;
         padding-left: 15px;
@@ -6982,12 +6980,12 @@ button {
       }
     }
     &:hover {
-        .product-detail {
-          bottom: 15px;
-        }
+      .product-detail {
+        bottom: 15px;
       }
     }
   }
+}
 .my-masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
@@ -7169,13 +7167,13 @@ button {
 .dropdown-icon {
   float: right;
   margin-left: 500px;
-  font-size: 1.2rem; 
-  margin-top: 1.5px; 
+  font-size: 1.2rem;
+  margin-top: 1.5px;
   &.rotate {
-    transform: rotate(40deg); 
+    transform: rotate(40deg);
   }
 }
-.CardHeader{
+.CardHeader {
   margin-right: 400px;
 }
 //forget_pwd//
@@ -7933,7 +7931,7 @@ button {
     width: 100%;
     height: 500px; /* or any desired fixed height */
     overflow: hidden;
-}
+  }
   img {
     width: 100%;
   }
@@ -8013,7 +8011,6 @@ button {
         border-color: var(--theme-color1);
       }
     }
-    
   }
 }
 .slider-right-nav,
@@ -8852,15 +8849,15 @@ button {
   display: flex;
   // width: 95%;
   // height: 80%;
-   .short-product-images {
+  .short-product-images {
     width: 83%;
     // width: 70%;
     // height: 50%;
   }
- .product-box{
- width: 100%;
- height: 60%;
- }
+  .product-box {
+    width: 100%;
+    height: 60%;
+  }
   .short-product-discription {
     width: auto;
     p {
@@ -10456,7 +10453,6 @@ button {
             }
           }
         }
-       
       }
     }
   }

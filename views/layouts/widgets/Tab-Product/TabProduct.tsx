@@ -172,7 +172,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
 
   return (
     <>
-      <section className="section-pt-space bg-white mt-2 ">
+      <section className="section-pt-space bg-white mt-2  ">
         <div className="custom-container ">
           <div className="tab-product-main">
             <div className="tab-prodcut-contain">
@@ -183,7 +183,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
                 </h3>
               </div>
 
-              <div className="top-bar-product-catogories ">
+              <div className="top-bar-product-catogories  custom-container">
                 <Carousel
                   activeIndex={activeIndex}
                   next={next}
@@ -261,7 +261,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
         </div>
       </section>
 
-      <section className="section-py-space ratio_asos product  ">
+      <section className="section-py-space ratio_asos product ">
         <div className="custom-container">
           <Row>
             <Col className="pe-0">
