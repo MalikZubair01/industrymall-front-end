@@ -118,7 +118,7 @@ const Header: NextPage<HeaderProps> = ({
         <TopBar />
         <div className="layout-header2">
           <div className="custom-container">
-            <Row className="align-items-center d-flex justify-content-between gx-2">
+            <Row className="align-items-center d-flex justify-content-between">
               {/* First Column */}
               <Col xs={12} sm={4} md={3} lg={2}>
                 <div className="main-menu-block w-100 justify-content-between">
@@ -138,8 +138,8 @@ const Header: NextPage<HeaderProps> = ({
                       <a>
                         <Media
                           src={`/images/layout-2/logo/im-logo.png`}
-                          className="img-fluid logo "
-                          width="200px"
+                          className="img-fluid logo"
+                          width="150px"
                           alt="logo"
                         />
                       </a>
@@ -147,22 +147,17 @@ const Header: NextPage<HeaderProps> = ({
                   </div>
                 </div>
               </Col>
+
               {/* Second Column */}
-              <Col
-                xs={12}
-                sm={8}
-                md={6}
-                lg={4}
-                className="d-none d-sm-block      "
-              >
+              <Col xs={12} sm={8} md={9} lg={4} className="d-none d-sm-block">
                 <Search products={products} />
               </Col>
 
               {/* Third Column */}
-              <Col xs={12} sm={4} md={6} lg={2}>
+              <Col xs={12} sm={4} md={9} lg={2}>
                 <div className="category-header-2 bg-white">
                   <div className="navbar-menu">
-                    <div className="category-left main-menu-block ">
+                    <div className="category-left main-menu-block">
                       <ShoppingCart
                         position={cartPopupPosition}
                         cartDisplay={display}
@@ -191,8 +186,10 @@ const Header: NextPage<HeaderProps> = ({
                   </div>
                 </div>
               </Col>
+
               {/* Fourth Column */}
-              <Col xs={12} sm={8} md={4} lg={3}>
+
+              <Col xs={12} sm={8} md={12} lg={3} className="">
                 <div
                   className="input-group mb-3 rounded rounded-pill p-1"
                   style={{ backgroundColor: "#0272BC" }}
