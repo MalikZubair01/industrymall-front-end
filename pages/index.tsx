@@ -14,6 +14,9 @@ import AllProducts from "../views/layouts/widgets/AllProducts/allProducts";
 import Menu from "views/layouts/layout1/menu";
 import TopCategory from "views/layouts/widgets/topCategory";
 import { useApiData } from "helpers/data/DataContext";
+import type { InferGetStaticPropsType, GetStaticProps } from 'next'
+
+
 
 interface CategoriesData {
   category1: string;
@@ -28,11 +31,13 @@ interface CategoriesData {
   e_s_banner_3: string;
   center_image1: string;
 }
+
 interface ApiData {
   Homesetting: CategoriesData[];
   brands: any;
 }
-const Home: NextPage = () => {
+
+const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [error, setError] = useState<string | null>(null);
   const [categoriesData, setCategoriesData] = useState<CategoriesData>({
     category1: "",
@@ -47,18 +52,15 @@ const Home: NextPage = () => {
     e_s_banner_3: "",
     center_image1: "",
   });
-  const apiData = useApiData() as ApiData;
-
-  const ip = process.env.NEXT_PUBLIC_BACKEND_URL;
-  console.log("backend url", ip);
+  const apiData = repo as ApiData;
 
   useEffect(() => {
     try {
       if (
-        Array.isArray((apiData as ApiData).Homesetting) &&
-        (apiData as ApiData).Homesetting.length > 0
+        Array.isArray(apiData.Homesetting) &&
+        apiData.Homesetting.length > 0
       ) {
-        setCategoriesData((apiData as ApiData).Homesetting[0]);
+        setCategoriesData(apiData.Homesetting[0]);
       }
     } catch (err) {
       console.error("Failed to fetch API data:", err);
@@ -130,6 +132,17 @@ const Home: NextPage = () => {
       </Layouts>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/homeapi`);
+    const repo = await res.json();
+    return { props: { repo } };
+  } catch (error) {
+    console.error("Failed to fetch API data during build:", error);
+    return { props: { repo: null } };
+  }
 };
 
 export default Home;
