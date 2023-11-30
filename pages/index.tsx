@@ -81,16 +81,16 @@ const Home: NextPage = () => {
               banner3={categoriesData.f_s_banner_3}
             />
             <TabProduct
-              catId={parseInt(categoriesData.category1)}
+              catId={categoriesData.category1}
               effect="icon-inline"
             />
             <TabProduct
-              catId={parseInt(categoriesData.category2)}
+              catId={categoriesData.category2}
               effect="icon-inline"
             />
             <CollectionBannerTwo banner={categoriesData.center_image1} />
             <TabProduct
-              catId={parseInt(categoriesData.category3)}
+              catId={categoriesData.category3}
               effect="icon-inline"
             />
             <ShortDisplay data={apiData} />
@@ -98,7 +98,7 @@ const Home: NextPage = () => {
               <Brands brands={apiData.brands} />
             </section>
             <TabProduct
-              catId={parseInt(categoriesData.category4)}
+              catId={categoriesData.category4}
               effect="icon-inline"
             />
             <RatioSquare />

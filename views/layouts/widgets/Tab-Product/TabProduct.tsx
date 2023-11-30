@@ -59,7 +59,7 @@ var settings = {
 };
 
 type TabProductProps = {
-  catId: number;
+  catId: string;
   effect?: any;
 };
 
@@ -204,26 +204,6 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
                                 onClick={(e) => {
                                   setLoading(true);
                                   setActiveTab(subCategory.id);
-                                }}
-                                onMouseEnter={(e) => {
-                                  const targetElement = e.target as HTMLElement;
-                                  targetElement.style.zIndex = "1";
-                                  targetElement.style.backgroundColor = "#fff";
-                                  targetElement.style.padding = "5px";
-                                  targetElement.style.border = "1px solid #ccc";
-                                  targetElement.style.borderRadius = "4px";
-                                  targetElement.style.textOverflow = "unset";
-                                  targetElement.style.whiteSpace = "unset";
-                                }}
-                                onMouseLeave={(e) => {
-                                  const targetElement = e.target as HTMLElement;
-                                  targetElement.style.zIndex = "unset";
-                                  targetElement.style.backgroundColor =
-                                    "transparent";
-                                  targetElement.style.padding = "0";
-                                  targetElement.style.border = "none";
-                                  targetElement.style.textOverflow = "ellipsis";
-                                  targetElement.style.whiteSpace = "nowrap";
                                 }}
                               >
                                 {subCategory.name}
