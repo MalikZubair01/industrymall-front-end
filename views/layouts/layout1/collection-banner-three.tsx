@@ -7,14 +7,14 @@ interface CollectionBannerProps {
   ban2: any;
   ban3: any;
 }
-
+function transformImageUrl(apiImageUrl) {
+  return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${apiImageUrl.replace(
+    / /g,
+    "%20"
+  )}`;
+}
 const CollectionBannerList = ({ banner }) => {
-  function transformImageUrl(apiImageUrl) {
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${apiImageUrl.replace(
-      / /g,
-      "%20"
-    )}`;
-  }
+ 
   const apiImageUrl = banner;
   const transformedImageUrl = transformImageUrl(apiImageUrl);
   return (
@@ -38,15 +38,8 @@ const CollectionBannerThree: React.FC<CollectionBannerProps> = ({
   ban2,
   ban3,
 }) => {
-  function transformImageUrl(apiImageUrl) {
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${apiImageUrl.replace(
-      / /g,
-      "%20"
-    )}`;
-  }
-  const transformedImageUrl = transformImageUrl(ban2);
 
-  const backendPort = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+  console.log(ban2);
 
   return (
     <section className="collection-banner section-pt-space b-g-white ">
@@ -54,12 +47,12 @@ const CollectionBannerThree: React.FC<CollectionBannerProps> = ({
         <Row className="collection2">
           <CollectionBannerList banner={ban1} />
           {/*  */}
-          <div className="d-flex col-4 bg-light justify-content-center align-items-center ">
+          <div className="d-flex col-4 bg-light justify-content-center align-items-center bg-white">
             <div className="col-6">
-              {/* <CollectionBannerList1 banner={ban2} /> */}
-              <img src="/images/secound.jpg" alt="not avaliable " />
+              <img src={transformImageUrl(ban2)} alt="not avaliable " />
+              {/* <img src='/images/movile-pic.jpg' alt="not avaliable " /> */}
             </div>
-            <div className="col-6">
+            <div className="col-6 p-3">
               <h5 style={{ color: "#333", fontSize: "14px" }}>
                 Download INDUSTRY MALL <br /> App Now!
               </h5>

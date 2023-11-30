@@ -113,6 +113,15 @@ const TopCategory: NextPage = () => {
                 />
                 <p
                   className="name text-center"
+                  style={{
+                    
+                      display: "-webkit-box",
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                      WebkitLineClamp: 2, // Number of lines to show
+                      textOverflow: "ellipsis",
+                    
+                  }}
                 >
                   {category.name}
                 </p>
