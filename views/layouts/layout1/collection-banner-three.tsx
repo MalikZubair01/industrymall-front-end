@@ -42,8 +42,7 @@ const CollectionBannerThree: React.FC<CollectionBannerProps> = ({
   console.log(ban2);
 
   return (
-    <section className="collection-banner section-pt-space b-g-white ">
-      <div className="custom-container">
+    <section className="custom-container collection-banner section-pt-space b-g-white ">
         <Row className="collection2">
           <CollectionBannerList banner={ban1} />
           {/*  */}
@@ -130,7 +129,6 @@ const CollectionBannerThree: React.FC<CollectionBannerProps> = ({
           {/*  */}
           <CollectionBannerList banner={ban3} />
         </Row>
-      </div>
     </section>
   );
 };

@@ -69,13 +69,13 @@ const AllProducts = () => {
   };
 
   return (
-    <section className="section-big-py-space ratio_asos bg-light custom-container">
+    <section className="section-big-py-space bg-light custom-container">
       <div className="allproduct-text text-center mx-auto mb-5 ">
         <p style={{ color: "white", fontSize: "30px", fontWeight: "100" }}>
-          Featured Products
+          Trending Products 🔥
         </p>
       </div>
-      <div className="custom-container">
+      <div className="">
         {loading ? (
           <div className="d-flex justify-content-center">
             <button className="btn btn-dark" type="button" disabled>

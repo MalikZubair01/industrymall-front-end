@@ -1,7 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
 import { Row, Col, Media } from "reactstrap";
-import Link from "next/link";
 
 interface CollectionBannerProps {
   banner1: string;
@@ -32,14 +31,12 @@ const CollectionBanner: NextPage<CollectionBannerProps> = ({banner1,banner2,bann
 
   return (
     <>
-      <section className="collection-banner section-pt-space b-g-white ">
-        <div className="custom-container">
+      <section className="custom-container collection-banner section-pt-space b-g-white ">
           <Row className="collection2">
             <CollectionBannerList banner={banner1} />
             <CollectionBannerList banner={banner2} />
             <CollectionBannerList banner={banner3} />
           </Row>
-        </div>
       </section>
     </>
   );

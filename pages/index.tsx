@@ -70,8 +70,6 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
   return (
     <>
       <Layouts>
-        {/* {error && <div className="alert alert-danger" role="alert">{error}</div>} */}
-        {apiData ? (
           <div className="bg-light">
             <Menu meneData={apiData} />
             <div className="my-4">
@@ -96,7 +94,7 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
               effect="icon-inline"
             />
             <ShortDisplay data={apiData} />
-            <section className="rounded-category custom-container">
+            <section className="my-5 custom-container">
               <Brands brands={apiData.brands} />
             </section>
             <TabProduct
@@ -109,26 +107,12 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
               ban2={categoriesData.e_s_banner_2}
               ban3={categoriesData.e_s_banner_3}
             />
-            <section className="rounded-category  custom-container">
+            <section className="mt-5 custom-container">
               <Suplier brands={apiData.brands} />
             </section>
             <AllProducts />
             <ContactBanner />
           </div>
-        ) : (
-          <div className="d-flex justify-content-center align-items-center m-5 p-5">
-            <div className="text-center">
-              <h1>Slow Internet! 😟</h1>
-              <p>Please check your internet connection 🚧 and try reloading.</p>
-              <button
-                className="btn btn-rounded m-3"
-                onClick={() => window.location.reload()}
-              >
-                Reload
-              </button>
-            </div>
-          </div>
-        )}
       </Layouts>
     </>
   );

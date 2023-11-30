@@ -172,8 +172,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
 
   return (
     <>
-      <section className="section-pt-space bg-white mt-2 ">
-        <div className="custom-container ">
+      <section className="section-pt-space custom-container bg-white mt-2 ">
           <div className="tab-product-main">
             <div className="tab-prodcut-contain">
               <div className="category-title">
@@ -238,7 +237,6 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
               </div>
             </div>
           </div>
-        </div>
       </section>
 
       <section className="section-py-space ratio_asos product  ">
