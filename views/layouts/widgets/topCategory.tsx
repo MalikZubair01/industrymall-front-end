@@ -120,7 +120,7 @@ const TopCategory: NextPage = () => {
             </Link>
           ))
         ) : (
-          <div className="text-center">No categories available</div>
+          <div className="text-center"></div>
         )}
       </Slider>
     </div>
