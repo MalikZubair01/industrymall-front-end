@@ -118,10 +118,10 @@ const Header: NextPage<HeaderProps> = ({
         <TopBar />
         <div className="layout-header2">
           <div className="custom-container">
-            <Row className="align-items-center d-flex justify-content-between">
+            <Row className="align-items-center justify-content-between">
               {/* First Column */}
               <Col xs={12} sm={4} md={3} lg={2}>
-                <div className="main-menu-block w-100 justify-content-between">
+                <div className="main-menu-block">
                   <div
                     onClick={() => {
                       setLeftMenu(!leftMenu);
@@ -138,8 +138,8 @@ const Header: NextPage<HeaderProps> = ({
                       <a>
                         <Media
                           src={`/images/layout-2/logo/im-logo.png`}
-                          className="img-fluid logo"
-                          width="150px"
+                          className="img-fluid logo "
+                          width="200px"
                           alt="logo"
                         />
                       </a>
@@ -147,17 +147,22 @@ const Header: NextPage<HeaderProps> = ({
                   </div>
                 </div>
               </Col>
-
               {/* Second Column */}
-              <Col xs={12} sm={8} md={9} lg={4} className="d-none d-sm-block">
+              <Col
+                xs={12}
+                sm={8}
+                md={6}
+                lg={4}
+                className="d-none d-sm-block      "
+              >
                 <Search products={products} />
               </Col>
 
               {/* Third Column */}
-              <Col xs={12} sm={4} md={9} lg={2}>
+              <Col xs={12} sm={4} md={6} lg={2}>
                 <div className="category-header-2 bg-white">
                   <div className="navbar-menu">
-                    <div className="category-left main-menu-block">
+                    <div className="category-left main-menu-block ">
                       <ShoppingCart
                         position={cartPopupPosition}
                         cartDisplay={display}
@@ -186,24 +191,19 @@ const Header: NextPage<HeaderProps> = ({
                   </div>
                 </div>
               </Col>
-
               {/* Fourth Column */}
-
-              <Col xs={12} sm={8} md={12} lg={3} className="">
+              <Col xs={12} sm={8} md={4} lg={3}>
                 <div
-                  className="input-group mb-3 rounded rounded-pill p-1"
+                  className="input-group mb-3 rounded rounded-pill shadow-sm"
                   style={{ backgroundColor: "#0272BC" }}
                 >
                   <input
                     type="text"
-                    className="form-control rounded-pill mb-2"
+                    className="form-control rounded-pill m-1"
                     placeholder="Enter Tracking Number"
-                    aria-label="Enter Tracking Number"
                     aria-describedby="basic-addon2"
                     style={{
-                      backgroundColor: "white",
                       borderColor: "#0272BC",
-                      borderRadius: "20px",
                     }}
                   />
                   <div className="input-group-append">
@@ -214,7 +214,6 @@ const Header: NextPage<HeaderProps> = ({
                         backgroundColor: "#0272BC",
                         color: "white",
                         borderColor: "#0272BC",
-                        borderRadius: "20px",
                       }}
                     >
                       <FontAwesomeIcon
