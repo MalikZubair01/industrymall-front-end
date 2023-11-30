@@ -56,8 +56,8 @@ const CollectionBannerThree: React.FC<CollectionBannerProps> = ({
           {/*  */}
           <div className="d-flex col-4 bg-light justify-content-center align-items-center ">
             <div className="col-6">
-              <CollectionBannerList1 banner={ban2} />
-              {/* <img src="/images/secound.jpg" alt="not avaliable " /> */}
+              {/* <CollectionBannerList1 banner={ban2} /> */}
+              <img src="/images/secound.jpg" alt="not avaliable " />
             </div>
             <div className="col-6">
               <h5 style={{ color: "#333", fontSize: "14px" }}>
