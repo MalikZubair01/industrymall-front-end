@@ -84,25 +84,10 @@ const TopBar: React.FC = () => {
               <div className="top-menu-block">
                 <ul>
                   <li>
-                    <a href="#">gift cards</a>
-                  </li>
-                  <li>
                     <a href="#">Notifications</a>
                   </li>
                   <li>
-                    <a href="#">help & contact</a>
-                  </li>
-                  <li>
-                    <a href="#">todays deal</a>
-                  </li>
-                  <li>
-                    <a href="#">track order</a>
-                  </li>
-                  <li>
-                    <a href="#">shipping </a>
-                  </li>
-                  <li>
-                    <a href="#">easy returns</a>
+                    <a href="#trackorder">track order</a>
                   </li>
                 </ul>
               </div>

@@ -136,11 +136,13 @@ const Header: NextPage<HeaderProps> = ({
                   <div className="logo-block">
                     <Link href="/#">
                       <a>
-                        <Media
+                        <Image
                           src={`/images/layout-2/logo/im-logo.png`}
                           className="img-fluid logo "
                           width="200px"
+                          height="100%"
                           alt="logo"
+                          layout="intrinsic"
                         />
                       </a>
                     </Link>
@@ -160,14 +162,17 @@ const Header: NextPage<HeaderProps> = ({
 
               {/* Third Column */}
               <Col xs={12} sm={4} md={6} lg={2}>
-                <div className="category-header-2 bg-white">
+                <div className="category-header-2 bg-white d-flex justify-content-center align-items-center">
                   <div className="navbar-menu">
-                    <div className="category-left main-menu-block ">
-                      <ShoppingCart
-                        position={cartPopupPosition}
-                        cartDisplay={display}
-                        layout="layout2"
-                      />
+                    <div className="category-left main-menu-block">
+                      {/* Your existing content */}
+                      <div className="mt-3">
+                        <ShoppingCart
+                          position={cartPopupPosition}
+                          cartDisplay={display}
+                          layout="layout2"
+                        />
+                      </div>
                       <div className="icon-block">
                         <ul className="d-flex">
                           <li className="d-block d-sm-none">
@@ -194,6 +199,7 @@ const Header: NextPage<HeaderProps> = ({
               {/* Fourth Column */}
               <Col xs={12} sm={8} md={4} lg={3}>
                 <div
+                  id="trackorder"
                   className="input-group mb-3 rounded rounded-pill shadow-sm"
                   style={{ backgroundColor: "#0272BC" }}
                 >

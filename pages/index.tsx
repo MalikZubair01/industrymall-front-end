@@ -95,7 +95,7 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
             />
             <ShortDisplay data={apiData} />
             <section className="my-5 custom-container">
-              <Brands brands={apiData.brands} />
+              <Brands brands={apiData?.brands} />
             </section>
             <TabProduct
               catId={categoriesData.category4}

@@ -110,7 +110,7 @@ const Search: NextPage<Props> = ({ products }) => {
     : [];
 
   return (
-    <div className='input-block '>
+    <div className='input-block mb-3'>
       <div className='input-box'>
         <div className='ps-form__input d-flex'>
           <input
