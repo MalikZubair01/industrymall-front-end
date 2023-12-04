@@ -67,6 +67,10 @@ interface coupen{
 }
 
 const chunkArray = (array, size) => {
+  if (!array || !Array.isArray(array)) {
+    return [];
+  }
+
   const result = [];
   for (let value of array) {
     let lastArray = result[result.length - 1];
@@ -78,6 +82,7 @@ const chunkArray = (array, size) => {
   }
   return result;
 };
+
 
 const RatioSquare = () => {
   const currencyContext = useContext(CurrencyContext);

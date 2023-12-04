@@ -7205,6 +7205,17 @@ button {
 
 //login//
 .login-page {
+  .input-text {
+    position: relative;
+  }
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1; /* Ensure the icon is above the input field */
+  }
   h3 {
     margin-bottom: calc(5px + (20 - 5) * ((100vw - 320px) / (1920 - 320)));
     text-transform: uppercase;

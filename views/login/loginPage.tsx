@@ -4,6 +4,8 @@ import { Row, Col, Input, Label } from "reactstrap";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -11,6 +13,8 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const [error, setError] = useState(""); // Error state
+
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     // Check if the user is already authenticated
@@ -102,15 +106,25 @@ const Login: NextPage = () => {
                   </div>
                   <div className="form-group">
                     <Label htmlFor="password">Password</Label>
-                    <Input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="form-control"
-                      id="password"
-                      placeholder="Enter your password"
-                      required
-                    />
+                    <div className="input-text">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          className="form-control"
+                          id="password"
+                          name="password"
+                          placeholder="Enter your password"
+                          required
+                          value={password}
+                          onChange={(e) => {
+                            setPassword(e.target.value);
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          onClick={() => setShowPassword(!showPassword)}
+                          icon={showPassword ? faEye : faEyeSlash}
+                          className="eye-icon"
+                        />
+                      </div>
                   </div>
                   <button
                     type="button"

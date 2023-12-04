@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import router from "next/router";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterPage: NextPage = () => {
   const [first_name, setFirstName] = useState("");
@@ -21,6 +23,8 @@ const RegisterPage: NextPage = () => {
   const [cPasswordError, setCPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const [emailError, setEmailError] = useState(""); // Email error state
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -215,27 +219,36 @@ const RegisterPage: NextPage = () => {
                     </FormGroup>
                     <FormGroup className="col-md-12">
                       <Label htmlFor="password">Password</Label>
-                      <Input
-                        type="password"
-                        className="form-control"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        required
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                          setPasswordError(""); // Clear password error on input change
-                        }}
-                      />
+                      <div className="input-text">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          className="form-control"
+                          id="password"
+                          name="password"
+                          placeholder="Enter your password"
+                          required
+                          value={password}
+                          onChange={(e) => {
+                            setPassword(e.target.value);
+                            setPasswordError(""); // Clear password error on input change
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          onClick={() => setShowPassword(!showPassword)}
+                          icon={showPassword ? faEye : faEyeSlash}
+                          className="eye-icon"
+                        />
+                      </div>
                       {passwordError && (
                         <div className="text-danger">{passwordError}</div>
                       )}
                     </FormGroup>
+
                     <FormGroup className="col-md-12">
                       <Label htmlFor="c_password">Confirm Password</Label>
+                      <div className="input-text">
                       <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         className="form-control"
                         id="c_password"
                         name="c_password"
@@ -247,6 +260,12 @@ const RegisterPage: NextPage = () => {
                           setCPasswordError(""); // Clear confirm password error on input change
                         }}
                       />
+                       <FontAwesomeIcon
+                          onClick={() => setShowPassword(!showPassword)}
+                          icon={showPassword ? faEye : faEyeSlash}
+                          className="eye-icon"
+                        />
+                      </div>
                       {cPasswordError && (
                         <div className="text-danger">{cPasswordError}</div>
                       )}

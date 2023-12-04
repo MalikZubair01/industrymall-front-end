@@ -134,7 +134,7 @@ const Header: NextPage<HeaderProps> = ({
                     </span>
                   </div>
                   <div className="logo-block">
-                    <Link href="/#">
+                    <Link href="/">
                       <a>
                         <Image
                           src={`/images/layout-2/logo/im-logo.png`}

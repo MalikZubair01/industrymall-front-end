@@ -108,7 +108,7 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
               ban3={categoriesData.e_s_banner_3}
             />
             <section className="mt-5 custom-container">
-              <Suplier brands={apiData.brands} />
+              <Suplier brands={apiData?.brands} />
             </section>
             <AllProducts />
             <ContactBanner />
