@@ -4,39 +4,29 @@ import Slider from "react-slick";
 import { useApiData } from "helpers/data/DataContext";
 import Link from "next/link";
 
-interface ApiData {
-  menus: {
-    [menuName: string]: {
-      categories: {
-        id: number;
-        name: string;
-        sub_categories: {
-          id: number;
-          name: string;
-          products: any[]; // Define the type for products
-        }[];
-      }[];
-    };
-  };
-  // Add other properties if needed
+interface data {
+  menus: any;
 }
 
-const TopCategory: NextPage = () => {
-  const apiData = useApiData() as ApiData;
+const TopCategory: NextPage<data> = ({menus}) => {
+  const menusData = menus ;
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (apiData && apiData.menus) {
+    if (menusData) {
       const allCategories = [];
-      for (const menuName in apiData.menus) {
-        const menu = apiData.menus[menuName];
-        for (const category of menu.categories) {
-          allCategories.push(category);
+  
+      for (const menu of menusData) {
+        if (menu.categories && menu.categories.length > 0) {
+          for (const category of menu.categories) {
+            allCategories.push(category);
+          }
         }
       }
+  
       setCategories(allCategories);
     }
-  }, [apiData]);
+  }, [menusData]);
 
   const sliderSettings = {
     autoplay: true,

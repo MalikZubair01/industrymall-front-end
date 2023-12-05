@@ -134,10 +134,7 @@ const ProductSlick: React.FC<ProductSlickProps> = ({
                       <FontAwesomeIcon icon={faFileArrowDown} size="2xl" />
                       <h6>Download pdf</h6>
                     </div>
-                    <div className="product-contact">
-                      <FontAwesomeIcon icon={faFilePdf} size="2xl" />
-                      <h6>Detail Document</h6>
-                    </div>
+                    
                   </div>
                 </Col>
               </Row>

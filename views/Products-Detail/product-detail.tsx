@@ -142,8 +142,8 @@ const ProductDetail: React.FC<ProductRightProps> = ({
           <div className="condition-box">
             <div>
               <span
-                className={`condition-text ${
-                  selectedCondition === "New" ? "active bg-black" : ""
+                className={`condtion_active ${
+                  selectedCondition === "New" ? "active  condition-text" : ""
                 }`}
                 onClick={() => setSelectedCondition("New")}
               >
@@ -152,8 +152,8 @@ const ProductDetail: React.FC<ProductRightProps> = ({
             </div>
             <div>
               <span
-                className={`condition-text ${
-                  selectedCondition === "Used" ? "active bg-black" : ""
+                className={`condtion_active ${
+                  selectedCondition === "Used" ? "active  condition-text" : ""
                 }`}
                 onClick={() => setSelectedCondition("Used")}
               >
@@ -405,11 +405,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
                     <i className="fa fa-facebook"></i>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus"></i>
-                  </a>
-                </li>
+               
                 <li>
                   <a href="#">
                     <i className="fa fa-twitter"></i>
@@ -420,11 +416,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
                     <i className="fa fa-instagram"></i>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-rss"></i>
-                  </a>
-                </li>
+                
               </ul>
               <div className="d-inline-block">
                 <button

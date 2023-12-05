@@ -1,7 +1,8 @@
-import React from "react";
+import React ,{ useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Row, Col, Container, Media } from "reactstrap";
 import Slider from "react-slick";
+import axios from "axios";
 
 var settings = {
   autoplay: true,
@@ -46,11 +47,19 @@ var settings = {
   ],
 };
 
-interface BrandList {
-  brands:any,
-}
-const Suplier: NextPage<BrandList> = (brands) => {
-  const brandList = brands.brands;
+
+const Suplier: NextPage = () => {
+  const [brandList, setBrandList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/brands`)
+    .then((response) => {
+      setBrandList(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, []);
 
   function transformImageUrl(apiImageUrl) {
     if (apiImageUrl) {
@@ -62,7 +71,7 @@ const Suplier: NextPage<BrandList> = (brands) => {
     <>
       <div className="container-brands slide-6 no-arrow">
               <Slider {...settings}>
-                {brandList.map((data, i) => (
+                {brandList && brandList.map((data, i) => (
                     <div className="category-contain" key={i}>
                 
                         <div className="img-wrapper">
