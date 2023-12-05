@@ -91,30 +91,23 @@ const RatioSquare = () => {
   const [selected, setSelected] = useState("motors");
   const [dataR, setDataR] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const { addToWish } = useContext(WishlistContext);
-  // const { addToCart } = useContext(CartContext);
-  // const { addToCompare } = useContext(CompareContext);
-  const router = useRouter();
 
   const handleTabClick = (tabName) => {
-    // Update the selected state based on the tab clicked
     setSelected(tabName);
     setLoading(true);
   };
   const apiData = useApiData() as coupen;
 
   useEffect(() => {
-    // console.log("My Api Data For Coupens:::", apiData.coupons);
     if (selected === "lights") {
-      setDataR(apiData.coupons); // Assuming data is an array in the response
+      setDataR(apiData.coupons); 
       setLoading(false);
     } else {
       const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search/product/${selected}`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
-          // Handle the data from the API here
-          setDataR(data.data); // Assuming data is an array in the response
+          setDataR(data.data);
           setLoading(false);
         })
         .catch((error) => {
@@ -123,6 +116,11 @@ const RatioSquare = () => {
         });
     }
   }, [selected]);
+
+
+  // https://dashboard.industrymall.net/api/f_product
+
+  // https://dashboard.industrymall.net/api/s_product
 
   return (
     <section className='ratio_square'>
@@ -208,35 +206,7 @@ const RatioSquare = () => {
                           </div>
                         </div>
                       </div>
-                      // <Slider {...settings}>
-                      //   {chunkArray(dataR, 3).map((chunk, chunkIndex) => (
-                      //     <div key={chunkIndex}>
-                      //       {chunk.map((item, itemIndex) => (
-                      //         <div key={itemIndex}>
-                      //           <div className='media-banner media-banner-1 border-0'>
-                      //             <div className='media-banner-box'>
-                      //               <div className='media gap-2'>
-                      //                 <div
-                      //                   style={{ width: "200", height: "200" }}>
-                      //                   <Link href='#'>{item.coupon_code}</Link>
-                      //                 </div>
-                      //                 <div className='media-body'>
-                      //                   <Link href='#'>
-                      //                     <p>{item.coupon_title}</p>
-                      //                   </Link>
-                      //                   <h6>
-                      //                     {selectedCurr.symbol}
-                      //                     {item.amount}
-                      //                   </h6>
-                      //                 </div>
-                      //               </div>
-                      //             </div>
-                      //           </div>
-                      //         </div>
-                      //       ))}
-                      //     </div>
-                      //   ))}
-                      // </Slider>
+                   
                     ) : (
                       <Slider {...settings}>
                         {chunkArray(dataR, 3).map((chunk, chunkIndex) => (

@@ -4,61 +4,29 @@ import ProductBox from "../Product-Box/productbox";
 import { CartContext } from "helpers/cart/cart.context";
 import { WishlistContext } from "helpers/wishlist/wish.context";
 import { CompareContext } from "helpers/compare/compare.context";
-import { useApiData } from "helpers/data/DataContext";
+import axios from "axios";
 
-const PRODUCTS_PER_PAGE = 12; // Number of products to show per page
-
-interface ApiData {
-  menus: {
-    [menuName: string]: {
-      categories: {
-        id: number;
-        name: string;
-        sub_categories: {
-          id: number;
-          name: string;
-          products: any[]; // Define the type for products
-        }[];
-      }[];
-    };
-  };
-  // Add other properties if needed
-}
+const PRODUCTS_PER_PAGE = 12; 
 
 const AllProducts = () => {
   const [productsData, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true);
   const { addToCart } = React.useContext(CartContext);
   const { addToWish } = React.useContext(WishlistContext);
   const { addToCompare } = React.useContext(CompareContext);
 
-  const apiData = useApiData() as ApiData;
-
   useEffect(() => {
-    const allProducts = [];
-
-    if (apiData && apiData.menus) {
-      // Check if apiData and apiData.menus exist
-      // Loop through each menu
-      for (const menuName in apiData.menus) {
-        // Loop through each category in the current menu
-        for (const category of apiData.menus[menuName].categories) {
-          // Loop through each sub_category in the current category
-          for (const subCategory of category.sub_categories) {
-            // Loop through each product in the current sub_category and add it to allProducts
-            for (const product of subCategory.products) {
-              allProducts.push(product);
-            }
-          }
-        }
-      }
-    }
-
-    // Set the productsData state with all fetched products
-    setProducts(allProducts);
-    setLoading(false); // Set loading to false once data is fetched
-  }, [apiData]);
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/h_product`)
+      .then((res) => {
+        setProducts(res.data.HotProduct);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching products:', error);
+        setLoading(false); // You might want to handle the error state appropriately
+      });
+  }, []);
 
   const startIndex = 0;
   const endIndex = currentPage * PRODUCTS_PER_PAGE;
@@ -72,7 +40,7 @@ const AllProducts = () => {
     <section className="section-big-py-space bg-light custom-container">
       <div className="allproduct-text text-center mx-auto mb-5 ">
         <p style={{ color: "white", fontSize: "30px", fontWeight: "100" }}>
-          Trending Products 🔥
+          Trending Products
         </p>
       </div>
       <div className="">

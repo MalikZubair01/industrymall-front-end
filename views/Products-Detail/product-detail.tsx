@@ -35,7 +35,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
 }) => {
   const [qty, setQty] = useState(1);
   const [stock, setStock] = useState(
-    item.stock > 0 ? "InStock" : "Out of Stock !"
+    item.stock?.quantity > 0 ? "InStock" : "Out of Stock !"
   );
   const [activesize, setSize] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -82,7 +82,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
   };
 
   const plusQty = () => {
-    if (item.stock > qty) {
+    if (item.stock?.quantity > qty) {
       setQty(qty + 1);
     } else {
       setStock("Out of Stock !");
@@ -160,7 +160,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
                 Used
               </span>
             </div>
-            <div className={item.stock > 0 ? "stock" : "out-stock"}>
+            <div className={item.stock?.quantity > 0 ? "stock" : "out-stock"}>
               <a href="#">{stock}</a>
             </div>
           </div>

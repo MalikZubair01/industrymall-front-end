@@ -88,7 +88,7 @@ const Menu = ({ meneData }: MenuProps) => {
                     <div className="side-menu-box">
                       {menuData[menuKey].categories?.map(
                         (category, categoryIndex) => (
-                          <div className="custom-side-menu-category">
+                          <div className="custom-side-menu-category" key={categoryIndex}>
                             <Dropdown.Item
                               key={categoryIndex}
                               onClick={handleClick(category.id, "cat")}
@@ -153,7 +153,7 @@ const Menu = ({ meneData }: MenuProps) => {
                   <div className="side-menu-box">
                     {menuData[menuKey].categories?.map(
                       (category, categoryIndex) => (
-                        <div className="custom-side-menu-category">
+                        <div className="custom-side-menu-category" key={categoryIndex}>
                           <Dropdown.Item
                             key={categoryIndex}
                             onClick={handleClick(category.id, "cat")}

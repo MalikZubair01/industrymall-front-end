@@ -85,12 +85,12 @@ const TopCategory: NextPage<data> = ({menus}) => {
       <Slider {...sliderSettings}>
         {categories.length > 0 ? (
           categories.map((category, i) => (
-            <Link
+            <div key={i}>
+              <Link
               href={`/collections/leftsidebar?category=${category.id}`}
               style={{}}
             >
               <div
-                key={i}
                 className="d-flex flex-column align-items-center justify-content-center"
               >
                 <img
@@ -117,6 +117,7 @@ const TopCategory: NextPage<data> = ({menus}) => {
                 </p>
               </div>
             </Link>
+            </div>
           ))
         ) : (
           <div className="text-center"></div>

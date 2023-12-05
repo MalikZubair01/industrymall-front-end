@@ -24,7 +24,7 @@ const ProductBox: NextPage<productType> = ({
   const { selectedCurr } = currencyContext;
   const { addToCart } = useContext(CartContext);
   const slider2 = React.useRef<Slider>();
-  const stock = product.stock;
+  const stock = product.stock?.quantity;
 
   const router = useRouter();
   const [modal, setModal] = useState(false);
