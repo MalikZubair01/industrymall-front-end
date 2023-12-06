@@ -97,3 +97,5 @@ public/asset-manifest.json
 tsconfig.tsbuildinfo
 
 # End of file
+!/store
+!next.config.js
