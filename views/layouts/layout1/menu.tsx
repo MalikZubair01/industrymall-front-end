@@ -42,6 +42,9 @@ const Menu = ({ meneData }: MenuProps) => {
     if (type === "cat") {
       router.push(`/collections/leftsidebar?category=${id}`);
     }
+    if (type === "menu") {
+      router.push(`/collections/leftsidebar?menu=${id}`);
+    }
   };
 
   useEffect(() => {
@@ -69,26 +72,28 @@ const Menu = ({ meneData }: MenuProps) => {
                       onMouseEnter={() => handleMouseEnter(index)}
                     >
                       <div
-                        className="custom-text-black"
-                        onMouseEnter={() => handleMouseEnter(index)}
+                        style={{
+                          whiteSpace: "pre-line",
+                          fontSize: "1em",
+                          lineHeight: "1em",
+                        }}
+                        onClick={handleClick(
+                          menuData[menuKey].menu_name,
+                          "menu"
+                        )}
                       >
-                        <div
-                          style={{
-                            whiteSpace: "pre-line",
-                            fontSize: "1em",
-                            lineHeight: "1em",
-                          }}
-                        >
-                          {menuData[menuKey].menu_name}
-                        </div>
-                      </div>
+                        {menuData[menuKey].menu_name}
+                      </div> 
                     </div>
                   </Accordion.Header>
                   <Accordion.Body>
                     <div className="side-menu-box">
                       {menuData[menuKey].categories?.map(
                         (category, categoryIndex) => (
-                          <div className="custom-side-menu-category" key={categoryIndex}>
+                          <div
+                            className="custom-side-menu-category"
+                            key={categoryIndex}
+                          >
                             <Dropdown.Item
                               key={categoryIndex}
                               onClick={handleClick(category.id, "cat")}
@@ -134,18 +139,17 @@ const Menu = ({ meneData }: MenuProps) => {
                       onMouseEnter={() => handleMouseEnter(index)}
                     >
                       <div
-                        className="custom-text-black"
-                        onMouseEnter={() => handleMouseEnter(index)}
+                        style={{
+                          whiteSpace: "pre-line",
+                          fontSize: "1em",
+                          lineHeight: "1em",
+                        }}
+                        onClick={handleClick(
+                          menuData[menuKey].menu_name,
+                          "menu"
+                        )}
                       >
-                        <div
-                          style={{
-                            whiteSpace: "pre-line",
-                            fontSize: "1em",
-                            lineHeight: "1em",
-                          }}
-                        >
-                          {menuData[menuKey].menu_name}
-                        </div>
+                        {menuData[menuKey].menu_name}
                       </div>
                     </div>
                   }
@@ -153,7 +157,10 @@ const Menu = ({ meneData }: MenuProps) => {
                   <div className="side-menu-box">
                     {menuData[menuKey].categories?.map(
                       (category, categoryIndex) => (
-                        <div className="custom-side-menu-category" key={categoryIndex}>
+                        <div
+                          className="custom-side-menu-category"
+                          key={categoryIndex}
+                        >
                           <Dropdown.Item
                             key={categoryIndex}
                             onClick={handleClick(category.id, "cat")}

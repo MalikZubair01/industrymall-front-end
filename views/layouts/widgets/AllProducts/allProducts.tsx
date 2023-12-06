@@ -4,23 +4,26 @@ import ProductBox from "../Product-Box/productbox";
 import { CartContext } from "helpers/cart/cart.context";
 import { WishlistContext } from "helpers/wishlist/wish.context";
 import { CompareContext } from "helpers/compare/compare.context";
+import { setProducts } from "store/product/reducers";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 const PRODUCTS_PER_PAGE = 12; 
 
 const AllProducts = () => {
-  const [productsData, setProducts] = useState([]);
+  const [productsData, setProductsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const { addToCart } = React.useContext(CartContext);
   const { addToWish } = React.useContext(WishlistContext);
   const { addToCompare } = React.useContext(CompareContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/h_product`);
-        setProducts(response.data.HotProduct);
+        setProductsData(Object.values(response.data.HotProduct));;
         setLoading(false);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -29,9 +32,16 @@ const AllProducts = () => {
     })();
   }, []);
 
+  const handleProduct = (product) => (e) => {
+    e.preventDefault();
+    dispatch(setProducts(product));
+  };
+
   const startIndex = 0;
   const endIndex = currentPage * PRODUCTS_PER_PAGE;
-  const productsToDisplay = productsData.slice(startIndex, endIndex);
+  const productsToDisplay = Array.isArray(productsData)
+  ? productsData.slice(startIndex, endIndex)
+  : [];
 
   const loadMoreProducts = () => {
     setCurrentPage(currentPage + 1);
@@ -72,6 +82,7 @@ const AllProducts = () => {
                       width: "257px",
                       marginBottom: "160px",
                     }}
+                    onClick={handleProduct(product)}
                   >
                     <ProductBox
                       hoverEffect={true}

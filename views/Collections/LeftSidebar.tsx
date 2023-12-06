@@ -11,6 +11,7 @@ import Slider from "react-slick";
 type LeftSidebarCollectionProps = {
   cat: any;
   sub_cat: any;
+  menu : any
 };
 
 const sliderSettings = {
@@ -47,7 +48,7 @@ const findMaxPrice = (products) => {
   return Math.max(...products.map(product => parseFloat(product.new_sale_price)));
 };
 
-const LeftSidebarCollection: NextPage<LeftSidebarCollectionProps> = ({ sub_cat, cat}) => {
+const LeftSidebarCollection: NextPage<LeftSidebarCollectionProps> = ({ sub_cat, cat ,menu}) => {
   const { leftSidebarOpen } = useContext(FilterContext);
   const [subCategoryProducts, setSubCategoryProducts] = useState([]);
   const [subCatName , setSubCatName] = useState('');
@@ -107,7 +108,7 @@ const LeftSidebarCollection: NextPage<LeftSidebarCollectionProps> = ({ sub_cat, 
       const bannerUrls = JSON.parse(categoryWithSideSliders.side_sliders || "[]");
       setSliderImages(bannerUrls);
     }
-  }, [apiData, sub_cat]);
+  }, [cat, sub_cat , menu]);
 
   useEffect(() => {
     if (categoryProducts.length > 0) {

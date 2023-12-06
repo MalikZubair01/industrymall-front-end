@@ -8,13 +8,14 @@ const LeftSidebar: NextPage = () => {
   const router = useRouter();
   const sub_category = router.query.sub_category;
   const category = router.query.category
+  const menu = router.query.menu
 
   return (
     <Layout1>
       <section className="section-big-pt-space section-big-pb-space ratio_asos bg-light">
         <div className="collection-wrapper">
           <div className="custom-container">
-            <LeftSidebarCollection cat={category} sub_cat={sub_category}/>
+            <LeftSidebarCollection cat={category} sub_cat={sub_category} menu={menu}/>
           </div>
         </div>
       </section>
