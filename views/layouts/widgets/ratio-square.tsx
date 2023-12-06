@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Card } from "react-bootstrap";
 import {
   TabContent,
   TabPane,
@@ -15,9 +16,7 @@ import { CurrencyContext } from "../../../helpers/currency/CurrencyContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useApiData } from "helpers/data/DataContext";
-import DisplayItem from "../layout2/DisplayItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags } from "@fortawesome/free-solid-svg-icons";
+import CouponCode from "./CouponCode";
 
 var settings = {
   dots: false,
@@ -62,11 +61,15 @@ var settings = {
   ],
 };
 
-interface coupen{
+interface coupen {
   coupons: any;
 }
 
 const chunkArray = (array, size) => {
+  if (!array || !Array.isArray(array)) {
+    return [];
+  }
+
   const result = [];
   for (let value of array) {
     let lastArray = result[result.length - 1];
@@ -101,7 +104,7 @@ const RatioSquare = () => {
   useEffect(() => {
     // console.log("My Api Data For Coupens:::", apiData.coupons);
     if (selected === "lights") {
-      setDataR(apiData.coupons); // Assuming data is an array in the response
+      setDataR(apiData?.coupons); // Assuming data is an array in the response
       setLoading(false);
     } else {
       const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search/product/${selected}`;
@@ -120,20 +123,21 @@ const RatioSquare = () => {
   }, [selected]);
 
   return (
-    <section className='ratio_square'>
-      <div className='custom-container  section-pb-space'>
-        <div className='b-g-white px-3 pb-3'>
+    <section className="ratio_square">
+      <div className="custom-container  section-pb-space">
+        <div className="b-g-white px-3 pb-3">
           <Row>
-            <Col className='p-0'>
-              <div className='theme-tab product'>
-                <Nav tabs className='tab-title media-tab'>
+            <Col className="p-0">
+              <div className="theme-tab product">
+                <Nav tabs className="tab-title media-tab">
                   <NavItem>
                     <NavLink
                       className={activeTab === "featured" ? "active" : ""}
                       onClick={() => {
                         setActiveTab("featured");
                         handleTabClick("motors");
-                      }}>
+                      }}
+                    >
                       Featured
                     </NavLink>
                   </NavItem>
@@ -143,7 +147,8 @@ const RatioSquare = () => {
                       onClick={() => {
                         setActiveTab("sponserd");
                         handleTabClick("vfds");
-                      }}>
+                      }}
+                    >
                       Sponserd
                     </NavLink>
                   </NavItem>
@@ -153,56 +158,26 @@ const RatioSquare = () => {
                       onClick={() => {
                         setActiveTab("onsale");
                         handleTabClick("lights");
-                      }}>
+                      }}
+                    >
                       Coupens
                     </NavLink>
                   </NavItem>
                 </Nav>
               </div>
-              <div className='tab-content-cls'>
+              <div className="tab-content-cls">
                 <TabContent activeTab={activeTab}>
                   <TabPane tabId={activeTab}>
                     {loading ? (
                       <div
-                        className='d-flex justify-content-center align-items-center'
-                        style={{ minHeight: "200px" }}>
-                        <Spinner type='grow' color='primary' />
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ minHeight: "200px" }}
+                      >
+                        <Spinner type="grow" color="primary" />
                       </div>
                     ) : selected === "lights" ? (
-                      <div className='row d-flex justify-content-center'>
-                        <div className='col-lg-6 mb-4 pb-3 pt-0 mt-0'>
-                          <div className='single-producty'>
-                            <div className='coupens'>
-                              <div className='coupens-title'>
-                                <FontAwesomeIcon
-                                  className='tag'
-                                  icon={faTags}
-                                  size='xl'
-                                />
-                                <h6 className='product-title'>
-                                  {dataR.length} Offers availble
-                                </h6>
-                              </div>
-
-                              <div className='offers'>
-                                <ul className='Offers-list'>
-                                  {dataR.map((offer, index) => (
-                                    <li key={index}>
-                                      <span className='offer'>
-                                        Offer # {index + 1}
-                                      </span>
-                                      <div className='offer-details'>
-                                        <h5>{offer.coupon_title}</h5>
-                                        <p>Use code # "{offer.coupon_code}"</p>
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <CouponCode dataR={dataR} />
+                    ) : (
                       // <Slider {...settings}>
                       //   {chunkArray(dataR, 3).map((chunk, chunkIndex) => (
                       //     <div key={chunkIndex}>
@@ -232,31 +207,33 @@ const RatioSquare = () => {
                       //     </div>
                       //   ))}
                       // </Slider>
-                    ) : (
                       <Slider {...settings}>
                         {chunkArray(dataR, 3).map((chunk, chunkIndex) => (
                           <div key={chunkIndex}>
                             {chunk.map((item, itemIndex) => (
                               <div key={itemIndex}>
-                                <div className='media-banner media-banner-1 border-0'>
-                                  <div className='media-banner-box'>
-                                    <div className='media gap-2'>
+                                <div className="media-banner media-banner-1 border-0">
+                                  <div className="media-banner-box">
+                                    <div className="media gap-2">
                                       <div
-                                        style={{ width: "200", height: "200" }}>
+                                        style={{ width: "200", height: "200" }}
+                                      >
                                         <Link
-                                          href={`/product-details/${item.id}`}>
+                                          href={`/product-details/${item.id}`}
+                                        >
                                           <img
                                             src={`${
                                               item.url ? item.url : "pro3/3.jpg"
                                             }`}
-                                            className='img-fluid object-fit-contain'
-                                            alt='banner'
+                                            className="img-fluid object-fit-contain"
+                                            alt="banner"
                                           />
                                         </Link>
                                       </div>
-                                      <div className='media-body'>
+                                      <div className="media-body">
                                         <Link
-                                          href={`/product-details/${item.id}`}>
+                                          href={`/product-details/${item.id}`}
+                                        >
                                           <p>{item.name}</p>
                                         </Link>
                                         <h6>
@@ -269,12 +246,12 @@ const RatioSquare = () => {
                                             </del>
                                           </span>
                                         </h6>
-                                        <ul className='rating'>
-                                          <i className='fa fa-star'></i>
-                                          <i className='fa fa-star'></i>
-                                          <i className='fa fa-star'></i>
-                                          <i className='fa fa-star'></i>
-                                          <i className='fa fa-star'></i>
+                                        <ul className="rating">
+                                          <i className="fa fa-star"></i>
+                                          <i className="fa fa-star"></i>
+                                          <i className="fa fa-star"></i>
+                                          <i className="fa fa-star"></i>
+                                          <i className="fa fa-star"></i>
                                         </ul>
                                       </div>
                                     </div>

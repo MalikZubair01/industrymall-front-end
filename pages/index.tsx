@@ -14,9 +14,7 @@ import AllProducts from "../views/layouts/widgets/AllProducts/allProducts";
 import Menu from "views/layouts/layout1/menu";
 import TopCategory from "views/layouts/widgets/topCategory";
 import { useApiData } from "helpers/data/DataContext";
-import type { InferGetStaticPropsType, GetStaticProps } from 'next'
-
-
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
 
 interface CategoriesData {
   category1: string;
@@ -37,7 +35,9 @@ interface ApiData {
   brands: any;
 }
 
-const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home: NextPage = ({
+  repo,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [error, setError] = useState<string | null>(null);
   const [categoriesData, setCategoriesData] = useState<CategoriesData>({
     category1: "",
@@ -70,49 +70,37 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
   return (
     <>
       <Layouts>
-          <div className="bg-light">
-            <Menu meneData={apiData} />
-            <div className="my-4">
-              <TopCategory />
-            </div>
-            <CollectionBanner
-              banner1={categoriesData.f_s_banner_1}
-              banner2={categoriesData.f_s_banner_2}
-              banner3={categoriesData.f_s_banner_3}
-            />
-            <TabProduct
-              catId={categoriesData.category1}
-              effect="icon-inline"
-            />
-            <TabProduct
-              catId={categoriesData.category2}
-              effect="icon-inline"
-            />
-            <CollectionBannerTwo banner={categoriesData.center_image1} />
-            <TabProduct
-              catId={categoriesData.category3}
-              effect="icon-inline"
-            />
-            <ShortDisplay data={apiData} />
-            <section className="my-5 custom-container">
-              <Brands brands={apiData?.brands} />
-            </section>
-            <TabProduct
-              catId={categoriesData.category4}
-              effect="icon-inline"
-            />
-            <RatioSquare />
-            <CollectionBannerThree
-              ban1={categoriesData.e_s_banner_1}
-              ban2={categoriesData.e_s_banner_2}
-              ban3={categoriesData.e_s_banner_3}
-            />
-            <section className="mt-5 custom-container">
-              <Suplier brands={apiData.brands} />
-            </section>
-            <AllProducts />
-            <ContactBanner />
+        <div className="bg-light">
+          <Menu meneData={apiData} />
+          <div className="my-4">
+            <TopCategory />
           </div>
+          <CollectionBanner
+            banner1={categoriesData.f_s_banner_1}
+            banner2={categoriesData.f_s_banner_2}
+            banner3={categoriesData.f_s_banner_3}
+          />
+          <TabProduct catId={categoriesData.category1} effect="icon-inline" />
+          <TabProduct catId={categoriesData.category2} effect="icon-inline" />
+          <CollectionBannerTwo banner={categoriesData.center_image1} />
+          <TabProduct catId={categoriesData.category3} effect="icon-inline" />
+          <ShortDisplay data={apiData} />
+          <section className="my-5 custom-container">
+            <Brands brands={apiData?.brands} />
+          </section>
+          <TabProduct catId={categoriesData.category4} effect="icon-inline" />
+          <RatioSquare />
+          <CollectionBannerThree
+            ban1={categoriesData.e_s_banner_1}
+            ban2={categoriesData.e_s_banner_2}
+            ban3={categoriesData.e_s_banner_3}
+          />
+          <section className="mt-5 custom-container">
+            <Suplier brands={apiData?.brands} />
+          </section>
+          <AllProducts />
+          <ContactBanner />
+        </div>
       </Layouts>
     </>
   );
@@ -120,7 +108,9 @@ const Home: NextPage = ({ repo }: InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/homeapi`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/homeapi`
+    );
     const repo = await res.json();
     return { props: { repo } };
   } catch (error) {

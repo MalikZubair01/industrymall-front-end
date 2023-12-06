@@ -45,8 +45,6 @@ var settings = {
   ],
 };
 
-
-
 interface ShortDisplayProps {
   data: any;
   effect?: any;
@@ -54,13 +52,12 @@ interface ShortDisplayProps {
 
 const ShortDisplay: React.FC<ShortDisplayProps> = ({ effect, data }) => {
   const [products, setProducts] = useState([]);
-  const coupens = data.coupons;
+  const coupens = data?.coupons;
 
   useEffect(() => {
     if (data?.menus) {
       // Use optional chaining to check if data and data.menus exist
       const allProducts = [];
-      
 
       // Loop through each menu
       for (const menuName in data.menus) {
@@ -115,19 +112,22 @@ const ShortDisplay: React.FC<ShortDisplayProps> = ({ effect, data }) => {
                   <div className="coupens-title">
                     <FontAwesomeIcon className="tag" icon={faTags} size="xl" />
                     <h6 className="product-title">
-                      {coupens.length} Offers availble
+                      {coupens?.length} Offers availble
                     </h6>
                   </div>
 
                   <div className="offers">
                     <ul className="Offers-list">
-                      {coupens.map((offer, index) => (
+                      {coupens?.map((offer, index) => (
                         <li key={index}>
                           <span className="offer">{offer.coupon_code}</span>
                           <div className="offer-details">
                             <h5>{offer.coupon_title}</h5>
-                           
-                            <p>Start Date: {offer.start_date} Exp Date:{offer.end_date}</p>
+
+                            <p>
+                              Start Date: {offer.start_date} Exp Date:
+                              {offer.end_date}
+                            </p>
                           </div>
                         </li>
                       ))}

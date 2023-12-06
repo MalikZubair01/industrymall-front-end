@@ -47,38 +47,43 @@ var settings = {
 };
 
 interface BrandList {
-  brands:any,
+  brands: any;
 }
 const Suplier: NextPage<BrandList> = (brands) => {
   const brandList = brands.brands;
 
   function transformImageUrl(apiImageUrl) {
     if (apiImageUrl) {
-      return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${apiImageUrl.replace(/ /g, '%20')}`;
+      return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${apiImageUrl.replace(
+        / /g,
+        "%20"
+      )}`;
     }
-    return ''; // Handle the case where apiImageUrl is not defined
+    return ""; // Handle the case where apiImageUrl is not defined
   }
   return (
     <>
       <div className="container-brands slide-6 no-arrow">
-              <Slider {...settings}>
-                {brandList.map((data, i) => (
-                    <div className="category-contain" key={i}>
-                
-                        <div className="img-wrapper">
-                          <Media src={transformImageUrl(data.logo)} alt="category" className="img-fluid brands-img" />
-                        </div>
-                        {/* <div>
+        <Slider {...settings}>
+          {brandList?.map((data, i) => (
+            <div className="category-contain" key={i}>
+              <div className="img-wrapper">
+                <Media
+                  src={transformImageUrl(data.logo)}
+                  alt="category"
+                  className="img-fluid brands-img"
+                />
+              </div>
+              {/* <div>
                           <div className="btn-rounded">{data.category}</div>
                 </div> */}
-                    </div>
-                ))}
-              </Slider>
+            </div>
+          ))}
+        </Slider>
       </div>
     </>
   );
 };
-
 
 export default Suplier;
 // export {Supplier};

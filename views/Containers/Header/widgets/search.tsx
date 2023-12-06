@@ -67,8 +67,8 @@ const Search: NextPage<Props> = ({ products }) => {
     if (resultItems && resultItems.length > 0) {
       if (resultItems.length > 5) {
         loadMoreView = (
-          <div className='ps-panel__footer text-center'>
-            <Link href='/search'>
+          <div className="ps-panel__footer text-center">
+            <Link href="/search">
               <a>See all results</a>
             </Link>
           </div>
@@ -76,8 +76,8 @@ const Search: NextPage<Props> = ({ products }) => {
       }
       productItemsView = resultItems.map((product: any, index: any) => (
         // <ProductSearchResult product={product} key={product.id} />
-        <div className=''>
-          <div className='p'>item {index}</div>
+        <div className="">
+          <div className="p">item {index}</div>
         </div>
       ));
     } else {
@@ -85,14 +85,14 @@ const Search: NextPage<Props> = ({ products }) => {
     }
     if (keyword !== "") {
       clearTextView = (
-        <span className='ps-form__action'>
-          <i className='icon icon-cross2'></i>
+        <span className="ps-form__action">
+          <i className="icon icon-cross2"></i>
         </span>
       );
     }
   } else {
     loadingView = (
-      <span className='ps-form__action'>{/* <Spin size="small" /> */}</span>
+      <span className="ps-form__action">{/* <Spin size="small" /> */}</span>
     );
   }
   type Product = {
@@ -105,27 +105,28 @@ const Search: NextPage<Props> = ({ products }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const filteredProducts = searchTerm
     ? products.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     : [];
 
   return (
-    <div className='input-block mb-3'>
-      <div className='input-box'>
-        <div className='ps-form__input d-flex'>
+    <div className="input-block mb-3">
+      <div className="input-box">
+        <div className="ps-form__input d-flex">
           <input
-            className='form-control'
+            className="form-control"
             ref={inputEl}
-            type='text'
+            type="text"
             value={searchTerm}
             placeholder="I'm shopping for..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
-            className='btn btn-normal'
+            className="btn btn-normal"
             onClick={(e) => {
               setSearchTerm("");
-            }}>
+            }}
+          >
             Clear
           </button>
         </div>
@@ -134,7 +135,7 @@ const Search: NextPage<Props> = ({ products }) => {
         {searchTerm ? (
           filteredProducts.length > 0 ? (
             <ul
-              className='ps-form__input d-flex rounded-3 form-control'
+              className="ps-form__input d-flex rounded-3 form-control"
               style={{
                 listStyle: "none",
                 padding: 0,
@@ -148,42 +149,45 @@ const Search: NextPage<Props> = ({ products }) => {
                 overflowY: "auto",
                 width: "calc(90% - 58%)", // Adjust the width as needed
                 boxSizing: "border-box", // Include padding and border in the total width
-              }}>
+              }}
+            >
               {filteredProducts.slice(0, 10).map((product) => (
                 <Link href={`/product-details/${product.id}`}>
-                <li
-                  key={product.id}
-                  style={{
-                    padding: "5px",
-                    marginLeft: "15px",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}>
-                  <img
-                    src={product.url}
-                    alt={product.name}
+                  <li
+                    key={product.id}
                     style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                      marginRight: "10px"
+                      padding: "5px",
+                      marginLeft: "15px",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
-                  />
-                  <div>
-                    <div>{product.name}</div>
+                  >
+                    <img
+                      src={product.url}
+                      alt={product.name}
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                        marginRight: "10px",
+                      }}
+                    />
                     <div>
-                      <span
-                        style={{
-                          textDecoration: "line-through",
-                          marginRight: "5px",
-                        }}>
-                        ${product.new_price}
-                      </span>
-                      <span>${product.new_sale_price}</span>
+                      <div>{product.name}</div>
+                      <div>
+                        <span
+                          style={{
+                            textDecoration: "line-through",
+                            marginRight: "5px",
+                          }}
+                        >
+                          ${product.new_price}
+                        </span>
+                        <span>${product.new_sale_price}</span>
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
                 </Link>
               ))}
             </ul>
@@ -194,7 +198,7 @@ const Search: NextPage<Props> = ({ products }) => {
           ""
         )}
       </div>
-    </div >
+    </div>
   );
 };
 
