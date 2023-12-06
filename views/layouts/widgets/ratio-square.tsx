@@ -13,11 +13,9 @@ import {
 import Slider from "react-slick";
 import { CurrencyContext } from "../../../helpers/currency/CurrencyContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useApiData } from "helpers/data/DataContext";
-import DisplayItem from "../layout2/DisplayItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 var settings = {
   dots: false,
@@ -62,9 +60,6 @@ var settings = {
   ],
 };
 
-interface coupen{
-  coupons: any;
-}
 
 const chunkArray = (array, size) => {
   if (!array || !Array.isArray(array)) {
@@ -87,40 +82,46 @@ const chunkArray = (array, size) => {
 const RatioSquare = () => {
   const currencyContext = useContext(CurrencyContext);
   const { selectedCurr } = currencyContext;
-  const [activeTab, setActiveTab] = useState("new products");
-  const [selected, setSelected] = useState("motors");
-  const [dataR, setDataR] = useState([]);
+  const [activeTab, setActiveTab] = useState("featured");
+  const [coupens, setCoupens] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const handleTabClick = (tabName) => {
-    setSelected(tabName);
-    setLoading(true);
-  };
-  const apiData = useApiData() as coupen;
+  const [productsData, setProducts] = useState([]);
 
   useEffect(() => {
-    if (selected === "lights") {
-      setDataR(apiData.coupons); 
-      setLoading(false);
-    } else {
-      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search/product/${selected}`;
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          setDataR(data.data);
-          setLoading(false);
-        })
-        .catch((error) => {
+    if (activeTab === "featured") {
+      ;(async()=>{
+        try{
+          axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/f_product`)
+          .then((response) => {
+            setProducts(response.data.FeaturesProduct);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching data from API:", error);
+            setLoading(false);
+          });
+        }
+        catch(error){
           console.error("Error fetching data from API:", error);
           setLoading(false);
-        });
+        }
+      })()
+
+
+    } else {
+          axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/s_product`)
+          .then((response) => {
+            setProducts(response.data.SponserdProduct);
+            setCoupens(response.data.Coupons);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching data from API:", error);
+            setLoading(false);
+          });
     }
-  }, [selected]);
+  }, [activeTab]);
 
-
-  // https://dashboard.industrymall.net/api/f_product
-
-  // https://dashboard.industrymall.net/api/s_product
 
   return (
     <section className='ratio_square'>
@@ -135,7 +136,6 @@ const RatioSquare = () => {
                       className={activeTab === "featured" ? "active" : ""}
                       onClick={() => {
                         setActiveTab("featured");
-                        handleTabClick("motors");
                       }}>
                       Featured
                     </NavLink>
@@ -145,17 +145,15 @@ const RatioSquare = () => {
                       className={activeTab === "sponserd" ? "active" : ""}
                       onClick={() => {
                         setActiveTab("sponserd");
-                        handleTabClick("vfds");
                       }}>
                       Sponserd
                     </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      className={activeTab === "onsale" ? "active" : ""}
+                      className={activeTab === "coupens" ? "active" : ""}
                       onClick={() => {
-                        setActiveTab("onsale");
-                        handleTabClick("lights");
+                        setActiveTab("coupens");
                       }}>
                       Coupens
                     </NavLink>
@@ -171,7 +169,7 @@ const RatioSquare = () => {
                         style={{ minHeight: "200px" }}>
                         <Spinner type='grow' color='primary' />
                       </div>
-                    ) : selected === "lights" ? (
+                    ) : activeTab === "coupens" ? (
                       <div className='row d-flex justify-content-center'>
                         <div className='col-lg-6 mb-4 pb-3 pt-0 mt-0'>
                           <div className='single-producty'>
@@ -183,13 +181,13 @@ const RatioSquare = () => {
                                   size='xl'
                                 />
                                 <h6 className='product-title'>
-                                  {dataR.length} Offers availble
+                                  {coupens.length} Offers availble
                                 </h6>
                               </div>
 
                               <div className='offers'>
                                 <ul className='Offers-list'>
-                                  {dataR.map((offer, index) => (
+                                  {coupens.map((offer, index) => (
                                     <li key={index}>
                                       <span className='offer'>
                                         Offer # {index + 1}
@@ -209,7 +207,7 @@ const RatioSquare = () => {
                    
                     ) : (
                       <Slider {...settings}>
-                        {chunkArray(dataR, 3).map((chunk, chunkIndex) => (
+                        {chunkArray(productsData, 3).map((chunk, chunkIndex) => (
                           <div key={chunkIndex}>
                             {chunk.map((item, itemIndex) => (
                               <div key={itemIndex}>

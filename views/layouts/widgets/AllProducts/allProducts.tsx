@@ -17,15 +17,16 @@ const AllProducts = () => {
   const { addToCompare } = React.useContext(CompareContext);
 
   useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/h_product`)
-      .then((res) => {
-        setProducts(res.data.HotProduct);
+    (async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/h_product`);
+        setProducts(response.data.HotProduct);
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error fetching products:', error);
         setLoading(false); // You might want to handle the error state appropriately
-      });
+      }
+    })();
   }, []);
 
   const startIndex = 0;

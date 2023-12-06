@@ -47,18 +47,20 @@ var settings = {
   ],
 };
 
-
 const Suplier: NextPage = () => {
   const [brandList, setBrandList] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/brands`)
-    .then((response) => {
-      setBrandList(response.data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/brands`);
+        setBrandList(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData(); // Invoke the async function
   }, []);
 
   function transformImageUrl(apiImageUrl) {
