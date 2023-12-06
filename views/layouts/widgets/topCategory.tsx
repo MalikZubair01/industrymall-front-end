@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import Slider from "react-slick";
-import { useApiData } from "helpers/data/DataContext";
+import { setMenus } from "store/product/reducers";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
 
 interface data {
@@ -11,6 +12,8 @@ interface data {
 const TopCategory: NextPage<data> = ({menus}) => {
   const menusData = menus ;
   const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+  
 
   useEffect(() => {
     if (menusData) {
@@ -25,8 +28,9 @@ const TopCategory: NextPage<data> = ({menus}) => {
       }
   
       setCategories(allCategories);
+      dispatch(setMenus(menusData));
     }
-  }, [menusData]);
+  }, [menusData, dispatch]);
 
   const sliderSettings = {
     autoplay: true,
