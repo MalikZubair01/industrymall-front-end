@@ -111,22 +111,25 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect, menus }) => {
   const [productsData, setProductsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  
 
   const menuData = menus as Menu[];
 
   useEffect(() => {
-    for (let menu of menuData) {
-      for (let cat of menu.categories) {
-        if (cat.id === catId) {
-          setCategoryName(cat.name);
-          setSubCategoriesData(cat.sub_categories);
-          setActiveTab(cat.sub_categories[0].id.toString());
-          break;
+    if(menuData  && menuData.length > 0) {
+      for (let menu of menuData) {
+        for (let cat of menu.categories) {
+          if (cat.id === catId) {
+            setCategoryName(cat.name);
+            setSubCategoriesData(cat.sub_categories);
+            setActiveTab(cat.sub_categories[0].id.toString());
+            break;
+          }
         }
       }
-    }
-    if (subCategoriesData.length > 0) {
-      setActiveTab(subCategoriesData[0].id);
+      if (subCategoriesData.length > 0) {
+        setActiveTab(subCategoriesData[0].id);
+      }
     }
   }, [catId, menuData, subCategoriesData]);
 

@@ -15,19 +15,28 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const initialProductState = {
-  products: {},
+  product: {},
 };
 
 const initialMenuState = {
   menus: [],
 };
 
+export type ProductState = {
+  product: {
+    product: {
+     
+    };
+  }; 
+};
+
 const productReducer = (state = initialProductState, action) => {
   switch (action.type) {
     case 'SET_PRODUCTS':
+      console.log('action prodcut', action.payload);
       return {
         ...state,
-        products: action.payload,
+        product: action.payload,
       };
     default:
       return state;
