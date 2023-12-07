@@ -118,19 +118,20 @@ const ShortDisplay: React.FC<ShortDisplayProps> = ({ effect, data }) => {
 
                   <div className="offers">
                     <ul className="Offers-list">
-                      {coupens?.map((offer, index) => (
-                        <li key={index}>
-                          <span className="offer">{offer.coupon_code}</span>
-                          <div className="offer-details">
-                            <h5>{offer.coupon_title}</h5>
+                      {coupens &&
+                        coupens.map((offer, index) => (
+                          <li key={index}>
+                            <span className="offer">{offer.coupon_code}</span>
+                            <div className="offer-details">
+                              <h5>{offer.coupon_title}</h5>
 
-                            <p>
-                              Start Date: {offer.start_date} Exp Date:
-                              {offer.end_date}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
+                              <p>
+                                Start Date: {offer.start_date} Exp Date:
+                                {offer.end_date}
+                              </p>
+                            </div>
+                          </li>
+                        ))}
                     </ul>
                   </div>
                 </div>

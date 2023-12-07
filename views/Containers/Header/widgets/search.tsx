@@ -34,80 +34,28 @@ const Search: NextPage<Props> = ({ products }) => {
   const [resultItems, setResultItems] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const debouncedSearchTerm = useDebounce(keyword, 300); // 300 milliseconds debounce time
+
   useEffect(() => {
-    if (keyword && keyword !== "") {
+    if (debouncedSearchTerm && debouncedSearchTerm !== "") {
       setLoading(true);
-      if (keyword) {
-        // Simulating a fetch request with a filter based on the keyword
-        const filteredProducts = products.filter((product) =>
-          product.name.toLowerCase().includes(keyword.toLowerCase())
-        );
 
-        setResultItems(filteredProducts);
-        setLoading(false);
-        setIsSearch(true);
-      } else {
-        setIsSearch(false);
-        setKeyword("");
-        setLoading(false);
-      }
-    } else {
-      setLoading(false);
-      setIsSearch(false);
-    }
-  }, [keyword, products]);
-
-  // Views
-  let productItemsView: JSX.Element | null;
-  let clearTextView: JSX.Element | null;
-  let loadingView: JSX.Element | null;
-  let loadMoreView: JSX.Element | null;
-
-  if (loading) {
-    if (resultItems && resultItems.length > 0) {
-      if (resultItems.length > 5) {
-        loadMoreView = (
-          <div className="ps-panel__footer text-center">
-            <Link href="/search">
-              <a>See all results</a>
-            </Link>
-          </div>
-        );
-      }
-      productItemsView = resultItems.map((product: any, index: any) => (
-        // <ProductSearchResult product={product} key={product.id} />
-        <div className="">
-          <div className="p">item {index}</div>
-        </div>
-      ));
-    } else {
-      productItemsView = <p>No product found.</p>;
-    }
-    if (keyword !== "") {
-      clearTextView = (
-        <span className="ps-form__action">
-          <i className="icon icon-cross2"></i>
-        </span>
+      // Simulating a fetch request with a filter based on the keyword
+      const filteredProducts = products.filter((product) =>
+        product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
+
+      setResultItems(filteredProducts);
+      setLoading(false);
+      setIsSearch(true);
+    } else {
+      setIsSearch(false);
+      setKeyword("");
+      setLoading(false);
     }
-  } else {
-    loadingView = (
-      <span className="ps-form__action">{/* <Spin size="small" /> */}</span>
-    );
-  }
-  type Product = {
-    id: number;
-    name: string;
-    oldPrice: number;
-    newPrice: number;
-    imageUrl: string;
-  };
-  const [searchTerm, setSearchTerm] = useState("");
-  const filteredProducts = searchTerm
-    ? products.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
+  }, [debouncedSearchTerm, products]);
+
+  // ... (rest of the code)
 
   return (
     <div className="input-block mb-3">
@@ -117,14 +65,14 @@ const Search: NextPage<Props> = ({ products }) => {
             className="form-control"
             ref={inputEl}
             type="text"
-            value={searchTerm}
+            value={keyword}
             placeholder="I'm shopping for..."
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => setKeyword(e.target.value)}
           />
           <button
             className="btn btn-normal"
-            onClick={(e) => {
-              setSearchTerm("");
+            onClick={() => {
+              setKeyword("");
             }}
           >
             Clear
@@ -132,14 +80,14 @@ const Search: NextPage<Props> = ({ products }) => {
         </div>
 
         {/* Product List */}
-        {searchTerm ? (
-          filteredProducts.length > 0 ? (
+        {debouncedSearchTerm ? (
+          resultItems && resultItems.length > 0 ? (
             <ul
               className="ps-form__input d-flex rounded-3 form-control"
               style={{
                 listStyle: "none",
                 padding: 0,
-                marginTop: "100px", // Use 'lightgray' instead of 'light'
+                marginTop: "100px",
                 display: "flex",
                 flexDirection: "column",
                 position: "absolute",
@@ -147,14 +95,13 @@ const Search: NextPage<Props> = ({ products }) => {
                 zIndex: 999,
                 maxHeight: "400px",
                 overflowY: "auto",
-                width: "calc(90% - 58%)", // Adjust the width as needed
-                boxSizing: "border-box", // Include padding and border in the total width
+                width: "calc(90% - 58%)",
+                boxSizing: "border-box",
               }}
             >
-              {filteredProducts.slice(0, 10).map((product) => (
-                <Link href={`/product-details/${product.id}`}>
+              {resultItems.slice(0, 10).map((product) => (
+                <Link href={`/product-details/${product.id}`} key={product.id}>
                   <li
-                    key={product.id}
                     style={{
                       padding: "5px",
                       marginLeft: "15px",

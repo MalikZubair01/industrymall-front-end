@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Row, Col, Container, Media } from "reactstrap";
 import Slider from "react-slick";
+import axios from "axios";
 
 var settings = {
   autoplay: true,
@@ -9,8 +10,8 @@ var settings = {
   dots: false,
   infinite: true,
   speed: 300,
-  slidesToShow: 6,
-  slidesToScroll: 6,
+  slidesToShow: 8,
+  slidesToScroll: 8,
   responsive: [
     {
       breakpoint: 1367,
@@ -46,11 +47,23 @@ var settings = {
   ],
 };
 
-interface BrandList {
-  brands: any;
-}
-const Suplier: NextPage<BrandList> = (brands) => {
-  const brandList = brands.brands;
+const Suplier: NextPage = () => {
+  const [brandList, setBrandList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/brands`
+        );
+        setBrandList(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); // Invoke the async function
+  }, []);
 
   function transformImageUrl(apiImageUrl) {
     if (apiImageUrl) {
@@ -65,20 +78,21 @@ const Suplier: NextPage<BrandList> = (brands) => {
     <>
       <div className="container-brands slide-6 no-arrow">
         <Slider {...settings}>
-          {brandList?.map((data, i) => (
-            <div className="category-contain" key={i}>
-              <div className="img-wrapper">
-                <Media
-                  src={transformImageUrl(data.logo)}
-                  alt="category"
-                  className="img-fluid brands-img"
-                />
-              </div>
-              {/* <div>
+          {brandList &&
+            brandList.map((data, i) => (
+              <div className="category-contain" key={i}>
+                <div className="img-wrapper">
+                  <Media
+                    src={transformImageUrl(data.logo)}
+                    alt="category"
+                    className="img-fluid brands-img"
+                  />
+                </div>
+                {/* <div>
                           <div className="btn-rounded">{data.category}</div>
                 </div> */}
-            </div>
-          ))}
+              </div>
+            ))}
         </Slider>
       </div>
     </>

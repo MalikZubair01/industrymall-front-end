@@ -5390,7 +5390,7 @@ button {
     ul.product-catogories {
       display: flex;
       li {
-        margin: 0 15px;
+        margin: 10px 15px;
         padding: 10px 0;
         width: max-content;
         position: relative;
@@ -5398,10 +5398,10 @@ button {
         a.active {
           color: var(--theme-color2);
           margin-bottom: 5px;
-          margin-top: 10px;
+          margin-top: 15px;
           &:before {
             position: absolute;
-
+            margin-bottom: 10px;
             height: 5px;
             background-color: var(--theme-color2);
             width: 100%;
@@ -7205,6 +7205,17 @@ button {
 
 //login//
 .login-page {
+  .input-text {
+    position: relative;
+  }
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1; /* Ensure the icon is above the input field */
+  }
   h3 {
     margin-bottom: calc(5px + (20 - 5) * ((100vw - 320px) / (1920 - 320)));
     text-transform: uppercase;
@@ -8372,6 +8383,14 @@ button {
     .condition-text {
       padding: 5px;
       background-color: var(--theme-color1);
+      color: $white;
+      border-radius: 3px;
+      font-size: calc(12px + (14 - 12) * ((100vw - 320px) / (1920 - 320)));
+      font-weight: 600;
+    }
+    .condtion_active{
+      padding: 5px;
+      background-color: gray;
       color: $white;
       border-radius: 3px;
       font-size: calc(12px + (14 - 12) * ((100vw - 320px) / (1920 - 320)));

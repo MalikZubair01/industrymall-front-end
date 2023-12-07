@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Card } from "react-bootstrap";
 import {
   TabContent,
   TabPane,
@@ -14,8 +13,9 @@ import {
 import Slider from "react-slick";
 import { CurrencyContext } from "../../../helpers/currency/CurrencyContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useApiData } from "helpers/data/DataContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTags } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import CouponCode from "./CouponCode";
 
 var settings = {
@@ -61,10 +61,6 @@ var settings = {
   ],
 };
 
-interface coupen {
-  coupons: any;
-}
-
 const chunkArray = (array, size) => {
   if (!array || !Array.isArray(array)) {
     return [];
@@ -85,34 +81,36 @@ const chunkArray = (array, size) => {
 const RatioSquare = () => {
   const currencyContext = useContext(CurrencyContext);
   const { selectedCurr } = currencyContext;
-  const [activeTab, setActiveTab] = useState("new products");
-  const [selected, setSelected] = useState("motors");
-  const [dataR, setDataR] = useState([]);
+  const [activeTab, setActiveTab] = useState("featured");
+  const [coupens, setCoupens] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const { addToWish } = useContext(WishlistContext);
-  // const { addToCart } = useContext(CartContext);
-  // const { addToCompare } = useContext(CompareContext);
-  const router = useRouter();
-
-  const handleTabClick = (tabName) => {
-    // Update the selected state based on the tab clicked
-    setSelected(tabName);
-    setLoading(true);
-  };
-  const apiData = useApiData() as coupen;
+  const [productsData, setProducts] = useState([]);
 
   useEffect(() => {
-    // console.log("My Api Data For Coupens:::", apiData.coupons);
-    if (selected === "lights") {
-      setDataR(apiData?.coupons); // Assuming data is an array in the response
-      setLoading(false);
+    if (activeTab === "featured") {
+      (async () => {
+        try {
+          axios
+            .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/f_product`)
+            .then((response) => {
+              setProducts(response.data.FeaturesProduct);
+              setLoading(false);
+            })
+            .catch((error) => {
+              console.error("Error fetching data from API:", error);
+              setLoading(false);
+            });
+        } catch (error) {
+          console.error("Error fetching data from API:", error);
+          setLoading(false);
+        }
+      })();
     } else {
-      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search/product/${selected}`;
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          // Handle the data from the API here
-          setDataR(data.data); // Assuming data is an array in the response
+      axios
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/s_product`)
+        .then((response) => {
+          setProducts(response.data.SponserdProduct);
+          setCoupens(response.data.Coupons);
           setLoading(false);
         })
         .catch((error) => {
@@ -120,7 +118,7 @@ const RatioSquare = () => {
           setLoading(false);
         });
     }
-  }, [selected]);
+  }, [activeTab]);
 
   return (
     <section className="ratio_square">
@@ -135,7 +133,6 @@ const RatioSquare = () => {
                       className={activeTab === "featured" ? "active" : ""}
                       onClick={() => {
                         setActiveTab("featured");
-                        handleTabClick("motors");
                       }}
                     >
                       Featured
@@ -146,7 +143,6 @@ const RatioSquare = () => {
                       className={activeTab === "sponserd" ? "active" : ""}
                       onClick={() => {
                         setActiveTab("sponserd");
-                        handleTabClick("vfds");
                       }}
                     >
                       Sponserd
@@ -154,10 +150,9 @@ const RatioSquare = () => {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      className={activeTab === "onsale" ? "active" : ""}
+                      className={activeTab === "coupens" ? "active" : ""}
                       onClick={() => {
-                        setActiveTab("onsale");
-                        handleTabClick("lights");
+                        setActiveTab("coupens");
                       }}
                     >
                       Coupens
@@ -175,92 +170,72 @@ const RatioSquare = () => {
                       >
                         <Spinner type="grow" color="primary" />
                       </div>
-                    ) : selected === "lights" ? (
-                      <CouponCode dataR={dataR} />
+                    ) : activeTab === "coupens" ? (
+                      <div className="row d-flex justify-content-center">
+                        <CouponCode cpns={coupens} />
+                      </div>
                     ) : (
-                      // <Slider {...settings}>
-                      //   {chunkArray(dataR, 3).map((chunk, chunkIndex) => (
-                      //     <div key={chunkIndex}>
-                      //       {chunk.map((item, itemIndex) => (
-                      //         <div key={itemIndex}>
-                      //           <div className='media-banner media-banner-1 border-0'>
-                      //             <div className='media-banner-box'>
-                      //               <div className='media gap-2'>
-                      //                 <div
-                      //                   style={{ width: "200", height: "200" }}>
-                      //                   <Link href='#'>{item.coupon_code}</Link>
-                      //                 </div>
-                      //                 <div className='media-body'>
-                      //                   <Link href='#'>
-                      //                     <p>{item.coupon_title}</p>
-                      //                   </Link>
-                      //                   <h6>
-                      //                     {selectedCurr.symbol}
-                      //                     {item.amount}
-                      //                   </h6>
-                      //                 </div>
-                      //               </div>
-                      //             </div>
-                      //           </div>
-                      //         </div>
-                      //       ))}
-                      //     </div>
-                      //   ))}
-                      // </Slider>
                       <Slider {...settings}>
-                        {chunkArray(dataR, 3).map((chunk, chunkIndex) => (
-                          <div key={chunkIndex}>
-                            {chunk.map((item, itemIndex) => (
-                              <div key={itemIndex}>
-                                <div className="media-banner media-banner-1 border-0">
-                                  <div className="media-banner-box">
-                                    <div className="media gap-2">
-                                      <div
-                                        style={{ width: "200", height: "200" }}
-                                      >
-                                        <Link
-                                          href={`/product-details/${item.id}`}
+                        {chunkArray(productsData, 3).map(
+                          (chunk, chunkIndex) => (
+                            <div key={chunkIndex}>
+                              {chunk.map((item, itemIndex) => (
+                                <div key={itemIndex}>
+                                  <div className="media-banner media-banner-1 border-0">
+                                    <div className="media-banner-box">
+                                      <div className="media gap-2">
+                                        <div
+                                          style={{
+                                            width: "200",
+                                            height: "200",
+                                          }}
                                         >
-                                          <img
-                                            src={`${
-                                              item.url ? item.url : "pro3/3.jpg"
-                                            }`}
-                                            className="img-fluid object-fit-contain"
-                                            alt="banner"
-                                          />
-                                        </Link>
-                                      </div>
-                                      <div className="media-body">
-                                        <Link
-                                          href={`/product-details/${item.id}`}
-                                        >
-                                          <p>{item.name}</p>
-                                        </Link>
-                                        <h6>
-                                          {selectedCurr.symbol}
-                                          {item.new_sale_price}{" "}
-                                          <span>
-                                            <del>
-                                              {selectedCurr.symbol}
-                                              {item.new_price}
-                                            </del>
-                                          </span>
-                                        </h6>
-                                        <ul className="rating">
-                                          <i className="fa fa-star"></i>
-                                          <i className="fa fa-star"></i>
-                                          <i className="fa fa-star"></i>
-                                          <i className="fa fa-star"></i>
-                                          <i className="fa fa-star"></i>
-                                        </ul>
+                                          <Link
+                                            href={`/product-details/${item.id}`}
+                                          >
+                                            <img
+                                              src={`${
+                                                item.url
+                                                  ? item.url
+                                                  : "pro3/3.jpg"
+                                              }`}
+                                              className="img-fluid object-fit-contain"
+                                              alt="banner"
+                                            />
+                                          </Link>
+                                        </div>
+                                        <div className="media-body">
+                                          <Link
+                                            href={`/product-details/${item.id}`}
+                                          >
+                                            <p>{item.name}</p>
+                                          </Link>
+                                          <h6>
+                                            {selectedCurr.symbol}
+                                            {item.new_sale_price}{" "}
+                                            <span>
+                                              <del>
+                                                {selectedCurr.symbol}
+                                                {item.new_price}
+                                              </del>
+                                            </span>
+                                          </h6>
+                                          <ul className="rating">
+                                            <i className="fa fa-star"></i>
+                                            <i className="fa fa-star"></i>
+                                            <i className="fa fa-star"></i>
+                                            <i className="fa fa-star"></i>
+                                            <i className="fa fa-star"></i>
+                                          </ul>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            ))}
-                          </div>
-                        ))}
+                              ))}
+                            </div>
+                          )
+                        )}
                       </Slider>
                     )}
                   </TabPane>

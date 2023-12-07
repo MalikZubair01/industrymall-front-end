@@ -10,6 +10,9 @@ import { ApiDataProvider } from "helpers/data/DataContext";
 import TaptoTop from "../views/Containers/TapTop";
 // import Customizer from "../views/Containers/customizer";
 import Loader from "../common/Loader";
+import { store, persistor } from "store/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
 
 // Styles
 import "public/scss/app.scss";
@@ -21,30 +24,32 @@ import "../data/i18n";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-     
-        <Loader>
-          <div>
-            <ApiDataProvider>
-              <CurrencyContextProvider>
-                <MenuContextProvider>
-                  <CartProvider>
-                    <WishlistProvider>
-                      <CompareProvider>
-                        <FilterProvider>
-                          <Component {...pageProps} />
-                        </FilterProvider>
-                      </CompareProvider>
-                    </WishlistProvider>
-                  </CartProvider>
-                </MenuContextProvider>
-              </CurrencyContextProvider>
-              <ToastContainer />
-              <TaptoTop />
-              {/* <Customizer /> */}
-            </ApiDataProvider>
-          </div>
-        </Loader>
-
+      <Loader>
+        <div>
+          <ApiDataProvider>
+            <CurrencyContextProvider>
+              <MenuContextProvider>
+                <CartProvider>
+                  <WishlistProvider>
+                    <CompareProvider>
+                      <FilterProvider>
+                        <Provider store={store}>
+                          <PersistGate loading={null} persistor={persistor}>
+                            <Component {...pageProps} />
+                          </PersistGate>
+                        </Provider>
+                      </FilterProvider>
+                    </CompareProvider>
+                  </WishlistProvider>
+                </CartProvider>
+              </MenuContextProvider>
+            </CurrencyContextProvider>
+            <ToastContainer />
+            <TaptoTop />
+            {/* <Customizer /> */}
+          </ApiDataProvider>
+        </div>
+      </Loader>
     </>
   );
 }

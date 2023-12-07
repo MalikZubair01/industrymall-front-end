@@ -13,8 +13,10 @@ import Slider from "react-slick";
 import { WishlistContext } from "../../../../helpers/wishlist/wish.context";
 import { CompareContext } from "../../../../helpers/compare/compare.context";
 import { Skeleton } from "../../../../common/skeleton";
-import { useApiData } from "helpers/data/DataContext"; // Make sure to provide the correct path
 import Link from "next/link";
+import { setProducts } from "store/product/reducers";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 var settings = {
   arrows: true,
@@ -61,62 +63,94 @@ var settings = {
 type TabProductProps = {
   catId: string;
   effect?: any;
+  menus: [];
 };
 
-interface ApiData {
-  menus: {
-    [menuKey: string]: {
-      categories: {
-        id: any;
-        name: string;
-        sub_categories: {
-          id: any;
-          name: string;
-          products: any[]; // Define the actual product type
-        }[];
-      }[];
-    };
-  };
+interface SubCategory {
+  id: number;
+  category_id: number;
+  name: string;
+  img: string;
+  imageforapp: string | null;
+  biller: string;
+  slug: string;
+  commission: string;
+  created_at: string;
+  updated_at: string;
 }
 
-const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
+interface Category {
+  id: string;
+  menu_id: string;
+  name: string;
+  img: string;
+  imageforapp: string | null;
+  commission: string;
+  side_sliders: string | null;
+  created_at: string;
+  updated_at: string;
+  sub_categories: SubCategory[];
+}
+
+interface Menu {
+  menu_name: string;
+  slug: string | null;
+  icon: string;
+  image: string;
+  imageforapp: string;
+  sliders: string[] | null;
+  categories: Category[];
+}
+
+const TabProduct: NextPage<TabProductProps> = ({ catId, effect, menus }) => {
   const { addToWish } = React.useContext(WishlistContext);
   const { addToCompare } = React.useContext(CompareContext);
-  const [activeTab, setActiveTab] = useState("new products");
+  const [activeTab, setActiveTab] = useState<string | null>(null);
   const [categoryName, setCategoryName] = useState("");
   const [subCategoriesData, setSubCategoriesData] = useState([]);
   const [productsData, setProductsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const apiData = useApiData() as ApiData;
+  const dispatch = useDispatch();
+
+  const menuData = menus as Menu[];
 
   useEffect(() => {
-    if (apiData?.menus) {
-      for (let menuKey in apiData.menus) {
-        let category = apiData.menus[menuKey].categories.find(
-          (cat) => cat.id === catId
-        );
-
-        if (category) {
-          setSubCategoriesData(category.sub_categories);
-          setCategoryName(category.name);
-
-          if (category.sub_categories.length > 0) {
-            setActiveTab(category.sub_categories[0].id);
-          }
+    for (let menu of menuData) {
+      for (let cat of menu.categories) {
+        if (cat.id === catId) {
+          setCategoryName(cat.name);
+          setSubCategoriesData(cat.sub_categories);
+          setActiveTab(cat.sub_categories[0].id.toString());
           break;
         }
       }
     }
-  }, [catId, apiData]);
+    if (subCategoriesData.length > 0) {
+      setActiveTab(subCategoriesData[0].id);
+    }
+  }, [catId, menuData, subCategoriesData]);
 
   useEffect(() => {
-    if (activeTab) {
+    if (activeTab && subCategoriesData.length > 0) {
       const activeSubCategory = subCategoriesData.find(
         (subCategory) => subCategory.id === activeTab
       );
+
       if (activeSubCategory) {
-        setProductsData(activeSubCategory.products);
-        setLoading(false);
+        const subCategoryId = activeSubCategory.id;
+
+        axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/p_b_sub/${subCategoryId}`
+          )
+          .then((res) => {
+            setProductsData(res.data.products);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching products:", error);
+            setLoading(false); // You might want to handle the error state appropriately
+          });
       }
     }
   }, [activeTab, subCategoriesData]);
@@ -170,73 +204,76 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
     setLoading(true);
   };
 
-  return (
-    <>
-      <section className="section-pt-space custom-container bg-white mt-2 ">
-          <div className="tab-product-main">
-            <div className="tab-prodcut-contain">
-              <div className="category-title">
-                <h3>
-                  {categoryName.substring(0, 25)}
-                  {categoryName.length > 25 ? "..." : ""}
-                </h3>
-              </div>
+  const handleProduct = (product) => (e) => {
+    e.preventDefault();
+    dispatch(setProducts(product));
+  };
 
-              <div className="top-bar-product-catogories ">
-                <Carousel
-                  activeIndex={activeIndex}
-                  next={next}
-                  previous={previous}
-                  interval={false}
-                >
-                  {subCategoriesData.map((subCategory, i) => (
-                    <CarouselItem key={subCategory.id}>
-                      <ul className="product-catogories">
-                        {subCategoriesData
-                          .slice(i, i + 5)
-                          .map((subCategory) => (
-                            <li className="top-catogories" key={subCategory.id}>
-                              <a
-                                className={
-                                  activeTab === subCategory.id ? "active" : ""
-                                }
-                                onClick={(e) => {
-                                  setLoading(true);
-                                  setActiveTab(subCategory.id);
-                                }}
-                              >
-                                {subCategory.name}
-                              </a>
-                            </li>
-                          ))}
-                      </ul>
-                    </CarouselItem>
-                  ))}
-                </Carousel>
+  return (
+    <div className="section-pt-space custom-container bg-white mt-2 ">
+      <section className="">
+        <div className="tab-product-main">
+          <div className="tab-prodcut-contain">
+            <div className="category-title">
+              <h3>
+                {categoryName.substring(0, 25)}
+                {categoryName.length > 25 ? "..." : ""}
+              </h3>
+            </div>
+
+            <div className="top-bar-product-catogories ">
+              <Carousel
+                activeIndex={activeIndex}
+                next={next}
+                previous={previous}
+                interval={false}
+              >
+                {subCategoriesData.map((subCategory, i) => (
+                  <CarouselItem key={subCategory.id}>
+                    <ul className="product-catogories">
+                      {subCategoriesData.slice(i, i + 5).map((subCategory) => (
+                        <li className="top-catogories" key={subCategory.id}>
+                          <a
+                            className={
+                              activeTab === subCategory.id ? "active" : ""
+                            }
+                            onClick={(e) => {
+                              setLoading(true);
+                              setActiveTab(subCategory.id);
+                            }}
+                          >
+                            {subCategory.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </CarouselItem>
+                ))}
+              </Carousel>
+            </div>
+            <div className="view-all d-flex " style={{ marginLeft: "auto" }}>
+              <div className="px-2 arrows">
+                <ul className="catogories-arrows">
+                  <li>
+                    <a className="prev" onClick={previous}>
+                      <i className="fa fa-angle-left"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a className="next" onClick={next}>
+                      <i className="fa fa-angle-right"></i>
+                    </a>
+                  </li>
+                </ul>
               </div>
-              <div className="view-all d-flex " style={{ marginLeft: "auto" }}>
-                <div className="px-2 arrows">
-                  <ul className="catogories-arrows">
-                    <li>
-                      <a className="prev" onClick={previous}>
-                        <i className="fa fa-angle-left"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a className="next" onClick={next}>
-                        <i className="fa fa-angle-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="view-akk">
-                  <Link href={`/collections/leftsidebar?category=${catId}`}>
-                    <a>View all</a>
-                  </Link>
-                </div>
+              <div className="view-akk">
+                <Link href={`/collections/leftsidebar?category=${catId}`}>
+                  <a>View all</a>
+                </Link>
               </div>
             </div>
           </div>
+        </div>
       </section>
 
       <section className="section-py-space ratio_asos product  ">
@@ -252,7 +289,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
                       ) : (
                         <Slider {...settings}>
                           {productsData.map((product, i) => (
-                            <div key={i}>
+                            <div key={i} onClick={handleProduct(product)}>
                               <ProductBox
                                 hoverEffect={effect}
                                 product={product}
@@ -271,7 +308,7 @@ const TabProduct: NextPage<TabProductProps> = ({ catId, effect }) => {
           </Row>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

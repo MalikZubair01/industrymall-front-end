@@ -2,55 +2,31 @@ import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Layout1 from "../../views/layouts/layout1";
-import RelatedProducts from "../../views/Products-Detail/related-products";
 import LeftSidebarPage from "../../views/Products-Detail/leftSidebarPage";
-import { useApiData } from "helpers/data/DataContext"; // Adjust the path as necessary
+import { useSelector } from "react-redux";
+import { ProductState } from "store/product/reducers";
 
 const LeftSidebar: NextPage = () => {
   const router = useRouter();
-  const id = parseInt(router.query.id as string); // Convert id from string to number
-  const apiData = useApiData();
+  const id = parseInt(router.query.id as string);
   const [pro, setProduct] = useState(null);
-
-  interface ApiData {
-    menus: {
-      [key: string]: {
-        categories: {
-          sub_categories: {
-            products: {
-              id: number;
-              name: string;
-              price: number;
-              image: string;
-            }[];
-          }[];
-        }[];
-      };
-    };
-  }
+  
+  // Use the ProductState type here
+  const product = useSelector((state: ProductState) => state.products);
 
   useEffect(() => {
-    if (id && apiData) {
-      const data = apiData as ApiData;
-      for (const menuName in data.menus) {
-        for (const category of data.menus[menuName].categories) {
-          for (const subCategory of category.sub_categories) {
-            const foundProduct = subCategory.products.find((prod: { id: number }) => prod.id === id);
-            if (foundProduct) {
-              setProduct(foundProduct);
-              break;
-            }
-          }
-        }
-      }
+    if (id) {
+      setProduct(product);
     }
-  }, [id, apiData]);
+  }, [id, product]);
+
+  console.log("pro", pro);
+
   return (
     <Layout1>
       <section className="section-big-pt-space bg-light">
         <LeftSidebarPage product={pro} />
       </section>
-      <RelatedProducts />
     </Layout1>
   );
 };

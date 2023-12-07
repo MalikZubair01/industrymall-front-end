@@ -13,7 +13,6 @@ import ShortDisplay from "views/layouts/layout2/ShortDisplay";
 import AllProducts from "../views/layouts/widgets/AllProducts/allProducts";
 import Menu from "views/layouts/layout1/menu";
 import TopCategory from "views/layouts/widgets/topCategory";
-import { useApiData } from "helpers/data/DataContext";
 import type { InferGetStaticPropsType, GetStaticProps } from "next";
 
 interface CategoriesData {
@@ -31,7 +30,8 @@ interface CategoriesData {
 }
 
 interface ApiData {
-  Homesetting: CategoriesData[];
+  Homesetting: CategoriesData;
+  menus: [];
   brands: any;
 }
 
@@ -52,15 +52,12 @@ const Home: NextPage = ({
     e_s_banner_3: "",
     center_image1: "",
   });
-  const apiData = repo as ApiData;
+  const apiData = repo && (repo as ApiData);
 
   useEffect(() => {
     try {
-      if (
-        Array.isArray(apiData.Homesetting) &&
-        apiData.Homesetting.length > 0
-      ) {
-        setCategoriesData(apiData.Homesetting[0]);
+      if (apiData.Homesetting) {
+        setCategoriesData(apiData.Homesetting);
       }
     } catch (err) {
       console.error("Failed to fetch API data:", err);
@@ -73,22 +70,38 @@ const Home: NextPage = ({
         <div className="bg-light">
           <Menu meneData={apiData} />
           <div className="my-4">
-            <TopCategory />
+            <TopCategory menus={apiData?.menus} />
           </div>
           <CollectionBanner
             banner1={categoriesData.f_s_banner_1}
             banner2={categoriesData.f_s_banner_2}
             banner3={categoriesData.f_s_banner_3}
           />
-          <TabProduct catId={categoriesData.category1} effect="icon-inline" />
-          <TabProduct catId={categoriesData.category2} effect="icon-inline" />
+          <TabProduct
+            catId={categoriesData.category1}
+            menus={apiData.menus}
+            effect="icon-inline"
+          />
+          <TabProduct
+            catId={categoriesData.category2}
+            effect="icon-inline"
+            menus={apiData.menus}
+          />
           <CollectionBannerTwo banner={categoriesData.center_image1} />
-          <TabProduct catId={categoriesData.category3} effect="icon-inline" />
-          <ShortDisplay data={apiData} />
+          <TabProduct
+            catId={categoriesData.category3}
+            effect="icon-inline"
+            menus={apiData?.menus}
+          />
+          {/* <ShortDisplay data={apiData} /> */}
           <section className="my-5 custom-container">
-            <Brands brands={apiData?.brands} />
+            <Brands />
           </section>
-          <TabProduct catId={categoriesData.category4} effect="icon-inline" />
+          <TabProduct
+            catId={categoriesData.category4}
+            effect="icon-inline"
+            menus={apiData.menus}
+          />
           <RatioSquare />
           <CollectionBannerThree
             ban1={categoriesData.e_s_banner_1}
@@ -96,7 +109,7 @@ const Home: NextPage = ({
             ban3={categoriesData.e_s_banner_3}
           />
           <section className="mt-5 custom-container">
-            <Suplier brands={apiData?.brands} />
+            <Suplier />
           </section>
           <AllProducts />
           <ContactBanner />
@@ -109,7 +122,7 @@ const Home: NextPage = ({
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/homeapi`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home_page_all`
     );
     const repo = await res.json();
     return { props: { repo } };

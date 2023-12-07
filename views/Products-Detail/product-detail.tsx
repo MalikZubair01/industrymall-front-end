@@ -35,7 +35,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
 }) => {
   const [qty, setQty] = useState(1);
   const [stock, setStock] = useState(
-    item.stock > 0 ? "InStock" : "Out of Stock !"
+    item.stock?.quantity > 0 ? "InStock" : "Out of Stock !"
   );
   const [activesize, setSize] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -82,7 +82,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
   };
 
   const plusQty = () => {
-    if (item.stock > qty) {
+    if (item.stock?.quantity > qty) {
       setQty(qty + 1);
     } else {
       setStock("Out of Stock !");
@@ -142,8 +142,8 @@ const ProductDetail: React.FC<ProductRightProps> = ({
           <div className="condition-box">
             <div>
               <span
-                className={`condition-text ${
-                  selectedCondition === "New" ? "active bg-black" : ""
+                className={`condtion_active ${
+                  selectedCondition === "New" ? "active  condition-text" : ""
                 }`}
                 onClick={() => setSelectedCondition("New")}
               >
@@ -152,15 +152,15 @@ const ProductDetail: React.FC<ProductRightProps> = ({
             </div>
             <div>
               <span
-                className={`condition-text ${
-                  selectedCondition === "Used" ? "active bg-black" : ""
+                className={`condtion_active ${
+                  selectedCondition === "Used" ? "active  condition-text" : ""
                 }`}
                 onClick={() => setSelectedCondition("Used")}
               >
                 Used
               </span>
             </div>
-            <div className={item.stock > 0 ? "stock" : "out-stock"}>
+            <div className={item.stock?.quantity > 0 ? "stock" : "out-stock"}>
               <a href="#">{stock}</a>
             </div>
           </div>
@@ -405,11 +405,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
                     <i className="fa fa-facebook"></i>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus"></i>
-                  </a>
-                </li>
+               
                 <li>
                   <a href="#">
                     <i className="fa fa-twitter"></i>
@@ -420,11 +416,7 @@ const ProductDetail: React.FC<ProductRightProps> = ({
                     <i className="fa fa-instagram"></i>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-rss"></i>
-                  </a>
-                </li>
+                
               </ul>
               <div className="d-inline-block">
                 <button
