@@ -12,9 +12,11 @@ import {
 } from "reactstrap";
 import Slider from "react-slick";
 import { CurrencyContext } from "../../../helpers/currency/CurrencyContext";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { setProducts } from "store/product/reducers";
+import Router from "next/router";
 import axios from "axios";
 import CouponCode from "./CouponCode";
 
@@ -84,7 +86,9 @@ const RatioSquare = () => {
   const [activeTab, setActiveTab] = useState("featured");
   const [coupens, setCoupens] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [productsData, setProducts] = useState([]);
+  const [productsData, setProductData] = useState([]);
+  const dispatch = useDispatch();
+  const router = Router;
 
   useEffect(() => {
     if (activeTab === "featured") {
@@ -93,7 +97,7 @@ const RatioSquare = () => {
           axios
             .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/f_product`)
             .then((response) => {
-              setProducts(response.data.FeaturesProduct);
+              setProductData(response.data.FeaturesProduct);
               setLoading(false);
             })
             .catch((error) => {
@@ -109,7 +113,7 @@ const RatioSquare = () => {
       axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/s_product`)
         .then((response) => {
-          setProducts(response.data.SponserdProduct);
+          setProductData(response.data.SponserdProduct);
           setCoupens(response.data.Coupons);
           setLoading(false);
         })
@@ -119,6 +123,12 @@ const RatioSquare = () => {
         });
     }
   }, [activeTab]);
+
+  const handleProduct = (product) => (e) => {
+    e.preventDefault();
+    dispatch(setProducts(product));
+    router.push(`/product-details/${product.id}`);
+  };
 
   return (
     <section className="ratio_square">
@@ -188,28 +198,20 @@ const RatioSquare = () => {
                                           style={{
                                             width: "200",
                                             height: "200",
+                                            cursor: "pointer",
                                           }}
+                                          onClick={handleProduct(item)}
                                         >
-                                          <Link
-                                            href={`/product-details/${item.id}`}
-                                          >
-                                            <img
-                                              src={`${
-                                                item.url
-                                                  ? item.url
-                                                  : "pro3/3.jpg"
-                                              }`}
-                                              className="img-fluid object-fit-contain"
-                                              alt="banner"
-                                            />
-                                          </Link>
+                                          <img
+                                            src={`${
+                                              item.url ? item.url : "pro3/3.jpg"
+                                            }`}
+                                            className="img-fluid object-fit-contain"
+                                            alt="banner"
+                                          />
                                         </div>
                                         <div className="media-body">
-                                          <Link
-                                            href={`/product-details/${item.id}`}
-                                          >
-                                            <p>{item.name}</p>
-                                          </Link>
+                                          <p>{item.name}</p>
                                           <h6>
                                             {selectedCurr.symbol}
                                             {item.new_sale_price}{" "}

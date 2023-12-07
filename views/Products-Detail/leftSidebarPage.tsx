@@ -18,11 +18,8 @@ interface LeftSidebar {
 const LeftSidebarPage: NextPage<LeftSidebar> = ({ product }) => {
   const filterContext = useContext(FilterContext);
   const { filterOpen, setFilterOpen } = filterContext;
-  const [productData, setProduct] = React.useState<any>({});
-  
-  useEffect(() => {
-    setProduct(product);
-  }, [product]);
+
+  console.log("productData", product);
   
   return (
     <div className="collection-wrapper">
@@ -49,9 +46,9 @@ const LeftSidebarPage: NextPage<LeftSidebar> = ({ product }) => {
                 </Col>
               </Row>
               <Row>
-                <ProductSlick item={productData} bundle={false} swatch={false} />
+                <ProductSlick item={product} bundle={false} swatch={false} />
               </Row>
-              <TabProduct  item={productData}/>
+              <TabProduct  item={product}/>
               <CustomerMessageForm/>
             </Col>
           </Row>

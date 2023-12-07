@@ -1,10 +1,12 @@
 import { NextPage } from "next";
 import { Media } from "reactstrap";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+// import { MenuState } from "store/menu/reducers";
+import { useEffect, useState } from "react";
 
 type CollectionBannerProps = {
   cat: any;
-  sub_cat: any;
 };
 
 const imageStyles: React.CSSProperties = {
@@ -21,19 +23,31 @@ function transformImageUrl(apiImageUrl) {
   const url = `${baseUrl}${apiImageUrl.replace(/ /g, "%20")}`;
   return url;
 }
-const CollectionBanner: NextPage<CollectionBannerProps> = ({
-  cat,
-  sub_cat,
-}) => {
+const CollectionBanner: NextPage<CollectionBannerProps> = ({ cat }) => {
+  // const menu  = useSelector((state :MenuState) => state.menus);
+//   const [colletction, setColletction] = useState([]);
+
+//  useEffect(()=>{
+
+//   const colletction =[]
+
+//   for(let m in menu){
+//     for(let c in m.categories){
+//       if(cat.id === c.id){
+//         setColletction(c.sub_categories)
+//       }
+//     }
+//   }
+//  },[cat,menu])
   return (
     <div className="top-banner-wrapper">
       <a href="#">
         <Media src={transformImageUrl(cat.img)} className="img-fluid" alt="" />
       </a>
       <div className="top-banner-content small-section">
-        <h1>{sub_cat ? sub_cat : cat.name}</h1>
+        <h1>{ cat.name}</h1>
 
-        {cat.sub_categories ? (
+        {/* {cat.sub_categories ? (
           <div className="top-banner-content small-section">
             {cat.sub_categories.length > 8 ? (
               <div
@@ -132,7 +146,9 @@ const CollectionBanner: NextPage<CollectionBannerProps> = ({
           </div>
         ) : (
           <div className="text-center">No Sub categories available</div>
-        )}
+        )} */}
+
+
       </div>
     </div>
   );
